@@ -4,7 +4,7 @@
 
 @layer base {
     html {//------------------------------------------------------Globals:
-      font-size: 0.9rem;//-----------------------------GlobalSize
+      font-size: 1.5rem;//-----------------------------GlobalSize
       -webkit-tap-highlight-color: transparent;//------TouchActionColor
       @apply h-full w-full select-none bg-bgA text-textA
     }
