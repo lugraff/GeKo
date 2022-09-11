@@ -1,24 +1,26 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MenuComponent } from './menu/menu.component';
+import { FileManagerComponent } from './file-manager/file-manager.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     WelcomeComponent,
-    MenuComponent
+    MenuComponent,
+    FileManagerComponent
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     AppRoutingModule,
     HttpClientModule,
-    //CommonModule,
     FormsModule
   ],
   providers: [HttpClient],

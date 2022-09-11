@@ -1,0 +1,18 @@
+<div class="h-screen w-full p-2">
+    <div class="flex flex-col gap-4 h-full">
+        <div class="flex justify-evenly border rounded-md p-2">
+            <button
+                class="border rounded-md p-1 bg-tertiary text-textB hover:bg-secondary active:bg-secondary">Neu</button>
+            <button
+                class="border rounded-md p-1 bg-tertiary text-textB hover:bg-secondary active:bg-secondary">Update</button>
+            <button
+                class="border rounded-md p-1 bg-tertiary text-textB hover:bg-secondary active:bg-secondary">Löschen</button>
+        </div>
+        <div class="flex flex-col justify-evenly border rounded-md p-2 bg-selection break-words">
+            <div *ngFor="let file of files; let i = index">
+                <div>{{i}}_{{file}}</div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GlobalsService } from '../globals.service';
 
 @Component({
   selector: 'app-welcome',
@@ -6,10 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WelcomeComponent implements OnInit {
   codeInput = "";
-  result = "";
   status = -1;
   message = "";
-  constructor() { }
+  constructor(private globals:GlobalsService) { }
 
   ngOnInit(): void {
     const request = new XMLHttpRequest();
@@ -17,7 +17,7 @@ export class WelcomeComponent implements OnInit {
     request.onreadystatechange = () => {
       this.status = request.status;
       if (request.status === 200){
-        this.result = request.responseText;
+        this.globals.fileURLs = JSON.parse(request.responseText);
         this.message = "Login erfolgreich!";
       };
     };
@@ -36,7 +36,7 @@ export class WelcomeComponent implements OnInit {
     request.onreadystatechange = () => {
       this.status = request.status;
       if (request.status === 200){
-        this.result = request.responseText;
+        this.globals.fileURLs = JSON.parse(request.responseText);
         this.message = "Login erfolgreich!";
       }else{
         this.message = "Login fehlgeschlagen!";

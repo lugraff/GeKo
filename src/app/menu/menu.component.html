@@ -1,1 +1,13 @@
-<p>menu works!</p>
+<div class="max-w-screen max-h-screen w-full h-full">
+    <div class="flex text-secondary">
+        <button class="text-secondary hover:text-primary active:text-primary" routerLink="">
+            Übersicht
+        </button>
+        <div>|</div>
+        <button class="text-secondary hover:text-primary active:text-primary" routerLink="./file-manager">
+            Datei Manager
+        </button>
+
+    </div>
+    <router-outlet></router-outlet>
+</div>
