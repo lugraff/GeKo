@@ -1,18 +1,37 @@
 <div class="h-screen w-full p-2">
-    <div class="flex flex-col gap-4 h-full">
-        <div class="flex justify-evenly border rounded-md p-2">
+    <div *ngIf="keyTrue.length === 0;else loggedIN">
+        <div class="flex flex-col items-center mt-8">
+            <input class="text-textB max-w-full rounded-sm w-64" [(ngModel)]="codeInput" type="text"
+                placeholder="Key...">
             <button
-                class="border rounded-md p-1 bg-tertiary text-textB hover:bg-secondary active:bg-secondary">Neu</button>
-            <button
-                class="border rounded-md p-1 bg-tertiary text-textB hover:bg-secondary active:bg-secondary">Update</button>
-            <button
-                class="border rounded-md p-1 bg-tertiary text-textB hover:bg-secondary active:bg-secondary">Löschen</button>
-        </div>
-        <div class="flex flex-col justify-evenly border rounded-md p-2 bg-selection break-words">
-            <div *ngFor="let file of files; let i = index">
-                <div>{{i}}_{{file}}</div>
-            </div>
-
+                class="flex rounded-sm px-1 mt-4 w-fit select-all bg-selection transition-colors active:bg-primary disabled:saturate-0 disabled:brightness-50"
+                (mouseup)=" onSendCode()">Send
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-6 h-6 fill-current">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+                </svg>
+            </button>
         </div>
     </div>
+    <ng-template #loggedIN>
+
+        <div class="flex flex-col gap-4 h-full">
+            <div class="flex justify-evenly border rounded-md p-2">
+                <button
+                    class="border rounded-md p-1 bg-tertiary text-textB hover:bg-secondary active:bg-secondary">Neu</button>
+                <button
+                    class="border rounded-md p-1 bg-tertiary text-textB hover:bg-secondary active:bg-secondary">Update</button>
+                <button
+                    class="border rounded-md p-1 bg-tertiary text-textB hover:bg-secondary active:bg-secondary">Löschen</button>
+            </div>
+            <div class="flex flex-col justify-evenly border rounded-md p-2 bg-selection break-words">
+                <div *ngFor="let file of fileURLs; let i = index">
+                    <button (click)="onSelectFile(i)">{{i}}_{{file}}</button>
+                </div>
+
+            </div>
+            {{result}}
+        </div>
+    </ng-template>
+    
 </div>

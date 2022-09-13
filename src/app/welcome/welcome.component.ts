@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalsService } from '../globals.service';
+import { StorageService } from '../storage.service';
 
 @Component({
   selector: 'app-welcome',
@@ -9,48 +10,37 @@ export class WelcomeComponent implements OnInit {
   codeInput = "";
   status = -1;
   message = "";
-  constructor(private globals:GlobalsService) { }
+  constructor(private globals:GlobalsService, private storage:StorageService) { 
+    this.codeInput = "";
+  }
 
   ngOnInit(): void {
-    const request = new XMLHttpRequest();
-    request.open("GET", "https://json.extendsclass.com/bins", true);
-    request.onreadystatechange = () => {
-      this.status = request.status;
-      if (request.status === 200){
-        this.globals.fileURLs = JSON.parse(request.responseText);
-        this.message = "Login erfolgreich!";
-      };
-    };
-    request.send();
+    
   }
 
   onSend(){
-    if (!this.codeInput.length){
+    const newInput = this.codeInput;
+    /*if (!this.codeInput.length){
       this.message = "Gib bitte einen gültigen Code ein.";
       return;
-    };
+    };*/
 
     const request = new XMLHttpRequest();
-    request.open("GET", "https://json.extendsclass.com/bins", true);
-    request.setRequestHeader("Api-key", this.codeInput);
+    //request.setRequestHeader("Security-key", newInput);
+    request.open("GET", "https://json.extendsclass.com/bin/634eeec6abe0", true);
     request.onreadystatechange = () => {
       this.status = request.status;
       if (request.status === 200){
-        this.globals.fileURLs = JSON.parse(request.responseText);
+        this.globals.secCode = newInput;
         this.message = "Login erfolgreich!";
       }else{
         this.message = "Login fehlgeschlagen!";
       };
     };
     request.send();
+  }
+
+  onDev(){
     
-/*
-    const request = new XMLHttpRequest();
-    request.open("GET", "https://json.extendsclass.com/bin/"+this.codeInput, true);
-    request.onreadystatechange = () => {
-      this.result = request.responseText;
-    };
-    request.send();
-*/
   }
 }

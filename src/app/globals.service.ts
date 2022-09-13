@@ -5,5 +5,6 @@ import { Injectable } from '@angular/core';
 })
 export class GlobalsService {
   fileURLs:string[] = [];
-  constructor() { }
+  secCode:string = "";
+  //constructor() { }
 }
