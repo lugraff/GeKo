@@ -1,23 +1,25 @@
 <div class="m-4">
     <div class="">
-        <button routerLink="./menu/file-manager" class="text-xs text-tertiary px-1 border rounded-sm border-bgB bg-bgB">DEV</button>
+        <button routerLink="./menu/file-manager"
+            class="text-xs text-tertiary px-1 border rounded-sm border-bgB bg-bgB">DEV</button>
     </div>
     <h1 class="text-4xl text-center text-primary">GeKo</h1>
 
 
     <div class="flex flex-col gap-4 w-full h-full text-center text-lg items-center p-2 mt-8">
-        <input class="text-textB max-w-full rounded-sm" [(ngModel)]="codeInput" type="text" placeholder="Code...">
-        <button *ngIf="status !== 200" class="flex rounded-sm px-1 mt-2 select-all bg-selection transition-colors active:bg-primary"
+        <input [disabled]="globals.mainCode !== ''" class="text-textB max-w-full rounded-sm" [(ngModel)]="codeInput" type="text" placeholder="Code...">
+        <button *ngIf="globals.mainCode === ''"
+            class="flex rounded-sm px-1 mt-2 select-all bg-selection transition-colors active:bg-primary"
             (click)="onSend()">Login
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-6 h-6 fill-current">
                 <path stroke-linecap="round" stroke-linejoin="round"
                     d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
             </svg>
         </button>
-        <button *ngIf="status === 200" routerLink="./menu"
+        <button *ngIf="globals.mainCode !== ''" routerLink="./menu"
             class="flex rounded-sm px-1 mt-2 select-all bg-selection transition-colors active:bg-primary">Go!</button>
 
         <div class="text-sm">{{message}}</div>
-        
+
     </div>
 </div>

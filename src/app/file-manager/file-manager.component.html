@@ -1,5 +1,5 @@
-<div class="h-screen w-full p-2">
-    <div *ngIf="keyTrue.length === 0;else loggedIN">
+<div class="h-full w-full p-2">
+    <div *ngIf="globals.mainCode.length === 0;else loggedIN">
         <div class="flex flex-col items-center mt-8">
             <input class="text-textB max-w-full rounded-sm w-64" [(ngModel)]="codeInput" type="text"
                 placeholder="Key...">
@@ -16,22 +16,25 @@
     <ng-template #loggedIN>
 
         <div class="flex flex-col gap-4 h-full">
-            <div class="flex justify-evenly border rounded-md p-2">
-                <button
-                    class="border rounded-md p-1 bg-tertiary text-textB hover:bg-secondary active:bg-secondary">Neu</button>
-                <button
-                    class="border rounded-md p-1 bg-tertiary text-textB hover:bg-secondary active:bg-secondary">Update</button>
-                <button
-                    class="border rounded-md p-1 bg-tertiary text-textB hover:bg-secondary active:bg-secondary">Löschen</button>
+            <div class="grid grid-cols-3 gap-3 border rounded-md p-2">
+                <button [disabled]="textArea === '' || globals.mainCode === ''" (click)="onNew()"
+                    class="border rounded-md p-1 bg-tertiary text-textB hover:bg-secondary active:bg-secondary disabled:brightness-50">Neu</button>
+                <button [disabled]="selectedFileNumber === -1" (click)="onUpdateFile()"
+                    class="border rounded-md p-1 bg-tertiary text-textB hover:bg-secondary active:bg-secondary disabled:brightness-50">Update</button>
+                <button [disabled]="selectedFileNumber === -1" (click)="onDeleteFile()"
+                    class="border rounded-md p-1 bg-tertiary text-textB hover:bg-secondary active:bg-secondary disabled:brightness-50">Löschen</button>
             </div>
-            <div class="flex flex-col justify-evenly border rounded-md p-2 bg-selection break-words">
-                <div *ngFor="let file of fileURLs; let i = index">
-                    <button (click)="onSelectFile(i)">{{i}}_{{file}}</button>
+            <input class="text-textB max-w-full rounded-sm w-64" [(ngModel)]="secKeyInput" type="text"
+                placeholder="Security-Key">
+            <div class=" border rounded-md p-2 h-32 bg-selection break-words overflow-y-auto">
+                <div *ngFor="let file of globals.fileURLs; let i = index">
+                    <button (click)="onSelectFile(i)"
+                        [ngClass]="selectedFileNumber === i ? 'bg-warning text-textB' : 'bg-tertiary text-textA'"
+                        class="border rounded-md m-1 px-1">{{i}}_{{file}}</button>
                 </div>
-
             </div>
-            {{result}}
+            <textarea [(ngModel)]="textArea" [disabled]="selectedFileNumber === -10"
+                class="select-text bg-bgB h-72"></textarea>
         </div>
     </ng-template>
-    
 </div>

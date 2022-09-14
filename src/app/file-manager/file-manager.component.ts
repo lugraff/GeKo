@@ -1,21 +1,18 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { delay, Observable } from 'rxjs';
+import { GlobalsService } from '../globals.service';
 
 @Component({
   selector: 'app-file-manager',
   templateUrl: './file-manager.component.html'
 })
 export class FileManagerComponent implements OnInit {
-  keyTrue = "";
   codeInput = "";
-  fileURLs = [];
-  //files = ["A","Test"];
-  result = "ø";
+  secKeyInput = "";
+  selectedFileNumber = -1;
+  textArea = "";
 
-
-  constructor(private http: HttpClient) {
-   }
+  constructor(private http: HttpClient, public globals:GlobalsService) {}
 
   ngOnInit(): void {
     
@@ -26,7 +23,6 @@ export class FileManagerComponent implements OnInit {
       return;
     }
     
-    let counter = 2;
     const request = new XMLHttpRequest();
     request.open("GET", "https://json.extendsclass.com/bins", true);
     request.setRequestHeader("Cache-Control", "no-cache, no-store, must-revalidate, post-check=0, pre-check=0");
@@ -34,39 +30,87 @@ export class FileManagerComponent implements OnInit {
     request.setRequestHeader("Expires", "0");
     request.setRequestHeader("Api-key", this.codeInput);
     request.onreadystatechange = () => {
-      counter -= 1;
-      if (request.status === 200 && counter === 0){
-        this.keyTrue = JSON.parse(JSON.stringify(this.codeInput));
-        this.fileURLs = JSON.parse(request.responseText);
+      if (request.readyState === 4){
+        if (request.status === 200){
+          this.globals.mainCode = JSON.parse(JSON.stringify(this.codeInput));
+          this.globals.fileURLs = JSON.parse(request.responseText);
+        };
       };
     };
     request.send();
   }
 
   onSelectFile(index:number): void {
+    this.selectedFileNumber = index;
     const request = new XMLHttpRequest();
-    request.open("GET", "https://json.extendsclass.com/bin/"+this.fileURLs[index], true);
-    request.setRequestHeader("Security-key", "wg");
+    request.open("GET", "https://json.extendsclass.com/bin/"+this.globals.fileURLs[index], true);
+    request.setRequestHeader("Cache-Control", "no-cache, no-store, must-revalidate, post-check=0, pre-check=0");
+    request.setRequestHeader("Pragma", "no-cache");
+    request.setRequestHeader("Expires", "0");
+    request.setRequestHeader("Security-key", this.secKeyInput);
     request.onreadystatechange = () => {
-      this.result = request.responseText;
-      console.log(request.responseText);
+      if (request.readyState === 4){
+        this.textArea = request.responseText;
+        console.log(request.responseText);
+      };
     };
     request.send();
     console.log("Request");
   }
 
   onNew(): void {
-
-
+    if (this.textArea === ""){
+      return;
+    }
     const request = new XMLHttpRequest();
     request.open("POST", "https://json.extendsclass.com/bin", true);
-    request.setRequestHeader("Api-key", "49f8f2a5-e8c2-11ec-b943-0242ac110002");
-    request.setRequestHeader("Security-key", "wg");
+    request.setRequestHeader("Cache-Control", "no-cache, no-store, must-revalidate, post-check=0, pre-check=0");
+    request.setRequestHeader("Pragma", "no-cache");
+    request.setRequestHeader("Expires", "0");
+    request.setRequestHeader("Api-key", this.globals.mainCode);
+    request.setRequestHeader("Security-key", this.secKeyInput);
     request.setRequestHeader("Private", "true");
     request.onreadystatechange = () => {
-      console.log(request.responseText);
+      if (request.readyState === 4){
+        console.log(request.responseText);
+      };
     };
-    request.send('{"name": "main","urlList":[]}');
+    request.send(this.textArea);
+  }
+
+  onDeleteFile(){
+    const request = new XMLHttpRequest();
+    request.open("DELETE", "https://json.extendsclass.com/bin/"+this.globals.fileURLs[this.selectedFileNumber], true);
+    request.setRequestHeader("Cache-Control", "no-cache, no-store, must-revalidate, post-check=0, pre-check=0");
+    request.setRequestHeader("Pragma", "no-cache");
+    request.setRequestHeader("Expires", "0");
+    request.setRequestHeader("Security-key", this.secKeyInput);
+    request.onreadystatechange = () => {
+      if (request.readyState === 4){
+        this.globals.fileURLs.slice(this.selectedFileNumber,1);
+        console.log(this.globals.fileURLs);
+      };
+    };
+    request.send();
+    this.selectedFileNumber = -1;
+  }
+
+  onUpdateFile(){
+    const request = new XMLHttpRequest();
+    request.open("PUT", "https://json.extendsclass.com/bin/:id"+this.globals.fileURLs[this.selectedFileNumber], true);
+    request.setRequestHeader("Cache-Control", "no-cache, no-store, must-revalidate, post-check=0, pre-check=0");
+    request.setRequestHeader("Pragma", "no-cache");
+    request.setRequestHeader("Expires", "0");
+    request.setRequestHeader("Security-key", this.secKeyInput);
+    request.onreadystatechange = () => {
+      if (request.readyState === 4){
+        console.log(request.responseText);
+      };
+    };
+    request.send(this.textArea);
+  }
+}
+
 /*
     console.log("KEY:" + "");
 
@@ -93,5 +137,3 @@ export class FileManagerComponent implements OnInit {
     
     
     */
-  }
-}
