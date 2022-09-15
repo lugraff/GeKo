@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { GlobalsService } from '../globals.service';
 import { StorageService } from '../storage.service';
 
@@ -6,21 +7,14 @@ import { StorageService } from '../storage.service';
   selector: 'app-welcome',
   templateUrl: './welcome.component.html'
 })
-export class WelcomeComponent implements OnInit {
+export class WelcomeComponent {
   codeInput = "";
-  status = -1;
   message = "";
-  constructor(public globals:GlobalsService, private storage:StorageService) { 
-    this.codeInput = "";
-  }
-
-  ngOnInit(): void {
-    
-  }
+  constructor(public globals:GlobalsService, private storage:StorageService, private router:Router) {}
 
   onSend(){
     const newInput = this.codeInput;
-    if (!this.codeInput.length){
+    if (this.codeInput.length <= 7 || this.codeInput.length >= 17){
       this.message = "Gib bitte einen gültigen Code ein.";
       return;
     };
@@ -37,36 +31,51 @@ export class WelcomeComponent implements OnInit {
           this.globals.secCode = newInput;
           this.CheckKey(request.responseText);
         }else{
-          this.message = "Login fehlgeschlagen!";
+          if (request.status === 401){
+            this.message = "Falscher Code! Versuche es noch einmal.";
+          }else if (request.status === 429){
+            this.message = "Seite ist momentan nicht erreichbar. Bitte versuche es später noch einmal...";
+          }else if (request.status === 404){
+            this.message = "Seite konnte nicht gefunden werden!";
+          }else if (request.status === 422){
+            this.message = "Fehler, keine Zieladresse bekannt.";
+          }else {
+            this.message = "Unbekannter Fehler. Versuche es noch einmal.";
+          };
         };
-      }
+      };
       
     };
     request.send();
   }
 
   CheckKey(key:string){
-    //await new Promise(f => setTimeout(f, 1000));
-    console.log("Start")
     const request = new XMLHttpRequest();
     request.open("GET", "https://json.extendsclass.com/bins", true);
     request.setRequestHeader("Cache-Control", "no-cache, no-store, must-revalidate, post-check=0, pre-check=0");
     request.setRequestHeader("Pragma", "no-cache");
     request.setRequestHeader("Expires", "0");
-    console.log(key)
     request.setRequestHeader("Api-key", key);
     request.onreadystatechange = () => {
       if (request.readyState === 4){
-        console.log(request.readyState);
         if (request.status === 200){
-          this.status = request.status;
           this.globals.mainCode = JSON.parse(JSON.stringify(key));
           this.globals.fileURLs = JSON.parse(request.responseText);
-          this.message = "Login erfolgreich!";
-          console.log("Succses");
-        }else{
-          console.log("Fail");
+          this.codeInput = "";
+          this.message = "";
+          this.router.navigate(['/menu'])
+        }else if (request.status === 401){
+            this.message = "Falscher Code! Versuche es noch einmal.";
+        }else if (request.status === 429){
+          this.message = "Seite ist momentan nicht erreichbar. Bitte versuche es später noch einmal...";
+        }else if (request.status === 404){
+          this.message = "Seite konnte nicht gefunden werden!";
+        }else if (request.status === 422){
+          this.message = "Fehler, keine Zieladresse bekannt.";
+        }else {
+          this.message = "Unbekannter Fehler. Versuche es noch einmal.";
         };
+        
       };
     };
     request.send();

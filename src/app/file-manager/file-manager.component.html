@@ -24,7 +24,7 @@
                 <button [disabled]="selectedFileNumber === -1" (click)="onDeleteFile()"
                     class="border rounded-md p-1 bg-tertiary text-textB hover:bg-secondary active:bg-secondary disabled:brightness-50">Löschen</button>
             </div>
-            <input class="text-textB max-w-full rounded-sm w-64" [(ngModel)]="secKeyInput" type="text"
+            <input class="text-textB max-w-full rounded-sm w-64" [(ngModel)]="globals.secCode" type="text"
                 placeholder="Security-Key">
             <div class=" border rounded-md p-2 h-32 bg-selection break-words overflow-y-auto">
                 <div *ngFor="let file of globals.fileURLs; let i = index">
