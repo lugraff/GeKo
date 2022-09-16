@@ -8,28 +8,49 @@ import { StorageService } from '../storage.service';
   templateUrl: './welcome.component.html'
 })
 export class WelcomeComponent {
+  nameInput = "";
   codeInput = "";
   message = "";
   constructor(public globals:GlobalsService, private storage:StorageService, private router:Router) {}
 
+  onKeyup(){
+    console.log("event");
+  }
+
   onSend(){
-    const newInput = this.codeInput;
+    const newNameInput = this.nameInput;
+    const newCodeInput = this.codeInput;
+    if (this.codeInput.length <= 1 || this.codeInput.length >= 32){
+      this.message = "Gib bitte einen gültigen Namen ein.";
+      return;
+    };
     if (this.codeInput.length <= 7 || this.codeInput.length >= 17){
       this.message = "Gib bitte einen gültigen Code ein.";
       return;
     };
+    const checkName = this.globals.nameEnterURLs.find(x => x.name == newNameInput);
+    if (checkName === undefined){
+      this.message = "Diesem Namen wurde noch kein Account zugewiesen.";
+      return;
+    };
     const request = new XMLHttpRequest();
-    request.open("GET", "https://json.extendsclass.com/bin/0c2051164719", true);
+    
+    request.open("GET", "https://json.extendsclass.com/bin/"+checkName.uri, true);
     request.setRequestHeader("Cache-Control", "no-cache, no-store, must-revalidate, post-check=0, pre-check=0");
     request.setRequestHeader("Pragma", "no-cache");
     request.setRequestHeader("Expires", "0");
-    request.setRequestHeader("Security-key", newInput);
+    request.setRequestHeader("Security-key", newCodeInput);
     request.onreadystatechange = () => {
       console.log(request.readyState);
       if (request.readyState === 4){
         if (request.status === 200){
-          this.globals.secCode = newInput;
-          this.CheckKey(request.responseText);
+          this.globals.account = JSON.parse(request.responseText);
+          if (this.globals.account.mainCode === ""){
+            this.GoToMenu();
+          }else{
+            this.CheckMainKey();
+          }
+          
         }else{
           if (request.status === 401){
             this.message = "Falscher Code! Versuche es noch einmal.";
@@ -49,35 +70,37 @@ export class WelcomeComponent {
     request.send();
   }
 
-  CheckKey(key:string){
+  CheckMainKey(){
     const request = new XMLHttpRequest();
     request.open("GET", "https://json.extendsclass.com/bins", true);
     request.setRequestHeader("Cache-Control", "no-cache, no-store, must-revalidate, post-check=0, pre-check=0");
     request.setRequestHeader("Pragma", "no-cache");
     request.setRequestHeader("Expires", "0");
-    request.setRequestHeader("Api-key", key);
+    request.setRequestHeader("Api-key", this.globals.account.mainCode);
     request.onreadystatechange = () => {
       if (request.readyState === 4){
         if (request.status === 200){
-          this.globals.mainCode = JSON.parse(JSON.stringify(key));
           this.globals.fileURLs = JSON.parse(request.responseText);
-          this.codeInput = "";
-          this.message = "";
-          this.router.navigate(['/menu'])
         }else if (request.status === 401){
-            this.message = "Falscher Code! Versuche es noch einmal.";
+            alert("Falscher Key!");
+            this.globals.account.mainCode = "";
         }else if (request.status === 429){
-          this.message = "Seite ist momentan nicht erreichbar. Bitte versuche es später noch einmal...";
+          alert("FileURLs nicht erreichbar...");
         }else if (request.status === 404){
-          this.message = "Seite konnte nicht gefunden werden!";
+          alert("FileURLs nicht gefunden!");
         }else if (request.status === 422){
-          this.message = "Fehler, keine Zieladresse bekannt.";
+          alert("Fehler, keine Zieladresse bekannt.");
         }else {
-          this.message = "Unbekannter Fehler. Versuche es noch einmal.";
+          alert("Unbekannter Fehler.");
         };
-        
+        this.GoToMenu();
       };
     };
     request.send();
+  }
+  GoToMenu(){
+    this.message = "";
+    this.codeInput = "";
+    this.router.navigate(['/menu'])
   }
 }

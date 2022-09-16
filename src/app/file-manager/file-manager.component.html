@@ -1,5 +1,5 @@
 <div class="h-full w-full p-2">
-    <div *ngIf="globals.mainCode.length === 0;else loggedIN">
+    <div *ngIf="globals.account.mainCode === '';else loggedInAsRoot">
         <div class="flex flex-col items-center mt-8">
             <input class="text-textB max-w-full rounded-sm w-64" [(ngModel)]="codeInput" type="text"
                 placeholder="Key...">
@@ -13,11 +13,11 @@
             </button>
         </div>
     </div>
-    <ng-template #loggedIN>
+    <ng-template #loggedInAsRoot>
 
         <div class="flex flex-col gap-4 h-full">
             <div class="grid grid-cols-3 gap-3 border rounded-md p-2">
-                <button [disabled]="textArea === '' || globals.mainCode === ''" (click)="onNew()"
+                <button [disabled]="textArea === '' || globals.account.mainCode === ''" (click)="onNew()"
                     class="border rounded-md p-1 bg-tertiary text-textB hover:bg-secondary active:bg-secondary disabled:brightness-50">Neu</button>
                 <button [disabled]="selectedFileNumber === -1" (click)="onUpdateFile()"
                     class="border rounded-md p-1 bg-tertiary text-textB hover:bg-secondary active:bg-secondary disabled:brightness-50">Update</button>
@@ -33,7 +33,7 @@
                         class="border rounded-md m-1 px-1">{{i}}_{{file}}</button>
                 </div>
             </div>
-            <textarea [(ngModel)]="textArea" [disabled]="selectedFileNumber === -10"
+            <textarea [(ngModel)]="textArea" [disabled]="selectedFileNumber === -1"
                 class="select-text bg-bgB h-72"></textarea>
         </div>
     </ng-template>
