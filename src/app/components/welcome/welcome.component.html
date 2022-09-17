@@ -22,7 +22,7 @@
         <button *ngIf="globals.account.name !== ''" routerLink="./menu"
             class="flex rounded-sm px-1 mt-2 select-all bg-selection transition-colors active:bg-primary">Go!
         </button>
-        <button *ngIf="globals.account.name !== ''" (click)="onLogOut()"
+        <button *ngIf="globals.account.name !== ''" (click)="globals.onLogOut()"
             class="flex rounded-sm px-1 mt-2 select-all bg-selection transition-colors active:bg-primary">Log Out
         </button>
 

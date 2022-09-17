@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GlobalsService } from '../../services/globals.service';
-import { StorageService } from '../../services/storage.service';
 import { Savefile } from "../../interfaces/Savefile";
 
 @Component({
@@ -12,7 +11,7 @@ export class WelcomeComponent implements OnInit {
   nameInput = "";
   codeInput = "";
   message = "";
-  constructor(public globals:GlobalsService, private storage:StorageService, private router:Router) {}
+  constructor(public globals:GlobalsService, private router:Router) {}
   
   ngOnInit(): void {
     if (this.globals.account.name !== ""){
@@ -25,21 +24,14 @@ export class WelcomeComponent implements OnInit {
       const result:Savefile = JSON.parse(savefile);
       this.nameInput = result.name;
       this.codeInput = result.code;
-      this.onSend();
+      //this.onSend();
     };
-  }
-
-  onLogOut(){
-    localStorage.clear();
-    this.globals.account.mainCode = "";
-    this.globals.account.name = "";
-    this.globals.fileURLs = [];//als Methode in Globals...
   }
 
   onSend(){
     const newNameInput = this.nameInput;
     const newCodeInput = this.codeInput;
-    if (this.codeInput.length <= 1 || this.codeInput.length >= 32){
+    if (this.nameInput.length <= 1 || this.nameInput.length >= 32){
       this.message = "Gib bitte einen gültigen Namen ein.";
       return;
     };
@@ -58,8 +50,6 @@ export class WelcomeComponent implements OnInit {
       if (request.readyState === 4){
         if (request.status === 200){
           this.globals.nameEnterUrls = JSON.parse(request.responseText);
-          const savefile:Savefile = {name:newNameInput,code:newCodeInput};
-          localStorage.setItem('save',JSON.stringify(savefile));
           this.LogIn(newNameInput,newCodeInput);
         }else{
           if (request.status === 401){
@@ -96,6 +86,8 @@ export class WelcomeComponent implements OnInit {
         if (request.status === 200){
           this.globals.account = JSON.parse(request.responseText);
           if (this.globals.account.mainCode === ""){
+            const savefile:Savefile = {name:newNameInput,code:""};
+            localStorage.setItem('save',JSON.stringify(savefile));
             this.GoToMenu();
           }else{
             this.CheckMainKey();

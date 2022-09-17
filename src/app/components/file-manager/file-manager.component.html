@@ -17,17 +17,26 @@
 
         <div class="flex flex-col gap-3 h-full">
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm border rounded-md p-2">
+                <button [disabled]="globals.account.mainCode === '' || securityInput === '' || nameInput === ''"
+                    (click)="deleteAccount()"
+                    class="border rounded-md p-1 bg-tertiary text-textB hover:bg-secondary active:bg-secondary disabled:brightness-50">Account
+                    löschen
+                </button>
                 <button
                     [disabled]="globals.account.mainCode === '' || privateInput === false || securityInput === '' || nameInput === ''"
                     (click)="newAccount()"
                     class="border rounded-md p-1 bg-tertiary text-textB hover:bg-secondary active:bg-secondary disabled:brightness-50">neuer
-                    Account</button>
+                    Account
+                </button>
                 <button [disabled]="textArea === '' || globals.account.mainCode === ''" (click)="onNew()"
-                    class="border rounded-md p-1 bg-tertiary text-textB hover:bg-secondary active:bg-secondary disabled:brightness-50">Neu</button>
+                    class="border rounded-md p-1 bg-tertiary text-textB hover:bg-secondary active:bg-secondary disabled:brightness-50">Neu
+                </button>
                 <button [disabled]="selectedFileNumber === -1" (click)="onUpdateFile()"
-                    class="border rounded-md p-1 bg-tertiary text-textB hover:bg-secondary active:bg-secondary disabled:brightness-50">Update</button>
+                    class="border rounded-md p-1 bg-tertiary text-textB hover:bg-secondary active:bg-secondary disabled:brightness-50">Update
+                </button>
                 <button [disabled]="selectedFileNumber === -1" (click)="onDeleteFile()"
-                    class="border rounded-md p-1 bg-tertiary text-textB hover:bg-secondary active:bg-secondary disabled:brightness-50">Löschen</button>
+                    class="border rounded-md p-1 bg-tertiary text-textB hover:bg-secondary active:bg-secondary disabled:brightness-50">Löschen
+                </button>
             </div>
             <div class="flex flex-wrap gap-2">
 

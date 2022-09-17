@@ -85,7 +85,7 @@ export class FileManagerComponent implements OnInit {
           const responseObj:NewFileResponse = JSON.parse(request.responseText);
           this.globals.fileURLs.push(responseObj.id);
           this.selectedFileNumber = this.globals.fileURLs.length - 1;
-          setTimeout(() => this.ActivateAccount(newAccount,responseObj), 1000);
+          setTimeout(() => this.ActivateAccount(newAccount,responseObj), 500);
         }else{
           alert(request.status);
         };
@@ -95,19 +95,75 @@ export class FileManagerComponent implements OnInit {
   }
 
   ActivateAccount(newAccount:Account,responseObj:NewFileResponse) :void {
-    console.log("Start Aktivate");
     const request = new XMLHttpRequest();
     request.open("PATCH", "https://json.extendsclass.com/bin/"+this.globals.namesUrl, true);
     request.setRequestHeader("Content-type", "application/json-patch+json");
     request.onreadystatechange = () => {
-      if (request.status === 200){
-        this.textArea = JSON.stringify(newAccount);
-      }else{
-        alert(request.status);
+      if (request.readyState === 4){
+          if (request.status === 200){
+            this.textArea = JSON.stringify(newAccount);
+            alert("Account für "+newAccount.name+" erstellt.");
+          }else{
+            alert(request.status);
+          };
+        };
       };
-    };
     request.send('[{"op":"add","path":"/enterUrls/-","value":{"name":"'+newAccount.name+'", "uri":"'+responseObj.id+'"}}]');
   }
+
+
+  deleteAccount(){
+    const nameInput = this.nameInput;
+    let fileIndex = -1;
+    for (let index = 0; index < this.globals.nameEnterUrls.enterUrls.length; index++) {
+      if (this.globals.nameEnterUrls.enterUrls[index].name === nameInput){
+        fileIndex = index;
+        break;
+      };
+    }
+    if (fileIndex === -1){
+      alert("Name nicht gefunden.");
+      return;
+    };
+    const request = new XMLHttpRequest();
+    request.open("PATCH", "https://json.extendsclass.com/bin/"+this.globals.namesUrl, true);
+    request.setRequestHeader("Content-type", "application/json-patch+json");
+    request.onreadystatechange = () => {
+      if (request.readyState === 4){
+        if (request.status === 200){
+          setTimeout(() => this.deleteUser(), 500);
+        }else{
+          alert(request.status);
+        };
+      };
+    };
+    request.send('[{"op":"remove","path":"/enterUrls/'+fileIndex.toString()+'"}]');
+  }
+  deleteUser(){
+    const filenumber = this.selectedFileNumber;
+    const request = new XMLHttpRequest();
+    request.open("DELETE", "https://json.extendsclass.com/bin/"+this.globals.fileURLs[filenumber], true);
+    request.setRequestHeader("Cache-Control", "no-cache, no-store, must-revalidate, post-check=0, pre-check=0");
+    request.setRequestHeader("Pragma", "no-cache");
+    request.setRequestHeader("Expires", "0");
+    request.setRequestHeader("Security-key", this.securityInput);
+    request.onreadystatechange = () => {
+      if (request.readyState === 4){
+        if (request.status === 200){
+          this.globals.fileURLs.splice(filenumber,1);
+          this.selectedFileNumber = -1;
+          this.textArea = "";
+          this.nameInput = "";
+          alert("Account gelöscht.");
+        }else{
+        alert(request.status);
+        };
+      };
+    };
+    request.send();
+  }
+
+  
 
   onNew(): void {
     if (this.textArea === ""){
@@ -166,13 +222,13 @@ export class FileManagerComponent implements OnInit {
     request.onreadystatechange = () => {
       if (request.readyState === 4){
         if (request.status === 200){
-          alert("file updated");
+          alert("Datei aktualisiert.");
         }else if (request.status === 401){
           alert("Falscher Security Code!");
         }else if (request.status === 429){
-          alert("exceeded the call limit!");
+          alert("Abruflimit überschritten!");
         }else if (request.status === 413){
-          alert("file too large!");
+          alert("Datei zu groß!");
         }else{
           alert(request.status);
         };

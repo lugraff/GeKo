@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Account } from '../interfaces/Account';
-import { EnterUrl } from '../interfaces/EnterUrl';
 import { EnterUrls } from '../interfaces/EnterUrls';
 
 
@@ -13,4 +12,12 @@ export class GlobalsService {
   fileURLs:string[] = [];
   nameEnterUrls:EnterUrls = {enterUrls:[]};
   //{"enterUrls":[{"name":"Jana","uri":"0c2051164719"},{"name":"Lucas","uri":"5e3cae5b2a29"},{"name":"Steve","uri":"726579cbbd8b"}]}
+
+  onLogOut(){
+    localStorage.clear();
+    this.account.mainCode = "";
+    this.account.name = "";
+    this.fileURLs = [];
+    this.nameEnterUrls = {enterUrls:[]};
+  }
 }
