@@ -28,20 +28,49 @@ export class WelcomeComponent {
       this.message = "Gib bitte einen gültigen Code ein.";
       return;
     };
-    const checkName = this.globals.nameEnterURLs.find(x => x.name == newNameInput);
+    
+
+    const request = new XMLHttpRequest();
+    request.open("GET", "https://json.extendsclass.com/bin/"+this.globals.namesUrl, true);
+    request.setRequestHeader("Cache-Control", "no-cache, no-store, must-revalidate, post-check=0, pre-check=0");
+    request.setRequestHeader("Pragma", "no-cache");
+    request.setRequestHeader("Expires", "0");
+    request.onreadystatechange = () => {
+      if (request.readyState === 4){
+        if (request.status === 200){
+          this.globals.nameEnterUrls = JSON.parse(request.responseText);
+          this.LogIn(newNameInput,newCodeInput);
+        }else{
+          if (request.status === 401){
+            this.message = "Unerwarteter Fehler!";
+          }else if (request.status === 429){
+            this.message = "Seite ist momentan nicht erreichbar. Bitte versuche es später noch einmal...";
+          }else if (request.status === 404){
+            this.message = "Uri konnte nicht gefunden werden!";
+          }else if (request.status === 422){
+            this.message = "Fehler, keine Uri-Zieladresse bekannt.";
+          }else {
+            this.message = "Unbekannter Fehler. Versuche es noch einmal.";
+          };
+        };
+      };
+    };
+    request.send();
+  }
+
+  LogIn(newNameInput:string,newCodeInput:string){
+    const checkName = this.globals.nameEnterUrls.enterUrls.find(x => x.name == newNameInput);
     if (checkName === undefined){
       this.message = "Diesem Namen wurde noch kein Account zugewiesen.";
       return;
     };
     const request = new XMLHttpRequest();
-    
     request.open("GET", "https://json.extendsclass.com/bin/"+checkName.uri, true);
     request.setRequestHeader("Cache-Control", "no-cache, no-store, must-revalidate, post-check=0, pre-check=0");
     request.setRequestHeader("Pragma", "no-cache");
     request.setRequestHeader("Expires", "0");
     request.setRequestHeader("Security-key", newCodeInput);
     request.onreadystatechange = () => {
-      console.log(request.readyState);
       if (request.readyState === 4){
         if (request.status === 200){
           this.globals.account = JSON.parse(request.responseText);
@@ -50,7 +79,6 @@ export class WelcomeComponent {
           }else{
             this.CheckMainKey();
           }
-          
         }else{
           if (request.status === 401){
             this.message = "Falscher Code! Versuche es noch einmal.";
@@ -65,7 +93,6 @@ export class WelcomeComponent {
           };
         };
       };
-      
     };
     request.send();
   }
