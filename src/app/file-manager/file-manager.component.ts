@@ -100,10 +100,13 @@ export class FileManagerComponent implements OnInit {
     request.open("PATCH", "https://json.extendsclass.com/bin/"+this.globals.namesUrl, true);
     request.setRequestHeader("Content-type", "application/json-patch+json");
     request.onreadystatechange = () => {
-      alert(request.status);
-      console.log(request.responseText);
+      if (request.status === 200){
+        this.textArea = JSON.stringify(newAccount);
+      }else{
+        alert(request.status);
+      };
     };
-    request.send('[{"op":"add","path":"/enterUrls","value":[{"name":"'+newAccount.name+'", "uri":"'+responseObj.id+'"},{"name":"'+newAccount.name+'", "uri":"'+responseObj.id+'"}]}]');
+    request.send('[{"op":"add","path":"/enterUrls/-","value":{"name":"'+newAccount.name+'", "uri":"'+responseObj.id+'"}}]');
   }
 
   onNew(): void {
