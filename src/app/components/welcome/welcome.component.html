@@ -20,7 +20,11 @@
             </svg>
         </button>
         <button *ngIf="globals.account.name !== ''" routerLink="./menu"
-            class="flex rounded-sm px-1 mt-2 select-all bg-selection transition-colors active:bg-primary">Go!</button>
+            class="flex rounded-sm px-1 mt-2 select-all bg-selection transition-colors active:bg-primary">Go!
+        </button>
+        <button *ngIf="globals.account.name !== ''" (click)="onLogOut()"
+            class="flex rounded-sm px-1 mt-2 select-all bg-selection transition-colors active:bg-primary">Log Out
+        </button>
 
         <div class="text-sm">{{message}}</div>
 

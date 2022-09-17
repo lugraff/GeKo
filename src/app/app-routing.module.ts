@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FileManagerComponent } from './file-manager/file-manager.component';
-import { MenuComponent } from './menu/menu.component';
-import { WelcomeComponent } from './welcome/welcome.component';
+import { FileManagerComponent } from './components/file-manager/file-manager.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
 
 const routes: Routes = [
   { path: '',

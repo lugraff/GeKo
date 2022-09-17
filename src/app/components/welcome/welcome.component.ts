@@ -1,20 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { GlobalsService } from '../globals.service';
-import { StorageService } from '../storage.service';
+import { GlobalsService } from '../../services/globals.service';
+import { StorageService } from '../../services/storage.service';
+import { Savefile } from "../../interfaces/Savefile";
 
 @Component({
   selector: 'app-welcome',
   templateUrl: './welcome.component.html'
 })
-export class WelcomeComponent {
+export class WelcomeComponent implements OnInit {
   nameInput = "";
   codeInput = "";
   message = "";
   constructor(public globals:GlobalsService, private storage:StorageService, private router:Router) {}
+  
+  ngOnInit(): void {
+    if (this.globals.account.name !== ""){
+      return;
+    }
+    const savefile = localStorage.getItem("save");
+    if (savefile === null){
+      return;
+    }else{
+      const result:Savefile = JSON.parse(savefile);
+      this.nameInput = result.name;
+      this.codeInput = result.code;
+      this.onSend();
+    };
+  }
 
-  onKeyup(){
-    console.log("event");
+  onLogOut(){
+    localStorage.clear();
+    this.globals.account.mainCode = "";
+    this.globals.account.name = "";
+    this.globals.fileURLs = [];//als Methode in Globals...
   }
 
   onSend(){
@@ -39,6 +58,8 @@ export class WelcomeComponent {
       if (request.readyState === 4){
         if (request.status === 200){
           this.globals.nameEnterUrls = JSON.parse(request.responseText);
+          const savefile:Savefile = {name:newNameInput,code:newCodeInput};
+          localStorage.setItem('save',JSON.stringify(savefile));
           this.LogIn(newNameInput,newCodeInput);
         }else{
           if (request.status === 401){

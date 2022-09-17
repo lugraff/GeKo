@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Account } from './interfaces/Account';
-import { EnterUrl } from './interfaces/EnterUrl';
-import { EnterUrls } from './interfaces/EnterUrls';
+import { Account } from '../interfaces/Account';
+import { EnterUrl } from '../interfaces/EnterUrl';
+import { EnterUrls } from '../interfaces/EnterUrls';
 
 
 @Injectable({

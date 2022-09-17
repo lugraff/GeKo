@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { GlobalsService } from '../globals.service';
-import { Account } from '../interfaces/Account';
-import { NewFileResponse } from "../interfaces/NewFileResponse";
+import { GlobalsService } from '../../services/globals.service';
+import { Account } from '../../interfaces/Account';
+import { NewFileResponse } from "../../interfaces/NewFileResponse";
 
 @Component({
   selector: 'app-file-manager',

@@ -42,15 +42,16 @@
                     placeholder="Name">
 
             </div>
-            <div class="border rounded-md p-2 h-32 bg-selection break-words overflow-y-auto">
+            <div class="flex flex-wrap border rounded-md p-2 h-32 bg-selection break-words overflow-y-auto">
                 <div *ngFor="let file of globals.fileURLs; let i = index">
                     <button (click)="onSelectFile(i)"
                         [ngClass]="selectedFileNumber === i ? 'bg-warning text-textB' : 'bg-tertiary text-textA'"
-                        class="border rounded-md m-1 px-1">{{i}}_{{file}}</button>
+                        class="border rounded-md m-1 px-1">{{i}}_{{file}}
+                    </button>
                 </div>
             </div>
-            <textarea [(ngModel)]="textArea" [disabled]="selectedFileNumber === -1"
-                class="select-text bg-bgB h-72"></textarea>
+            <textarea [(ngModel)]="textArea" [disabled]="globals.account.mainCode === ''"
+                class="select-all bg-bgB h-72"></textarea>
         </div>
     </ng-template>
 </div>
