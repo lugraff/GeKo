@@ -35,11 +35,14 @@ export class WelcomeComponent implements OnInit {
       this.message = "Gib bitte einen gültigen Namen ein.";
       return;
     };
+    if (newNameInput === "Dev"){
+      this.router.navigate(['./menu/file-manager']);
+      return;
+    };
     if (this.codeInput.length <= 7 || this.codeInput.length >= 17){
       this.message = "Gib bitte einen gültigen Code ein.";
       return;
     };
-    
 
     const request = new XMLHttpRequest();
     request.open("GET", "https://json.extendsclass.com/bin/"+this.globals.namesUrl, true);

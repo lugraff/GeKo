@@ -1,12 +1,9 @@
-<div class="m-4">
-    <div class="">
-        <button routerLink="./menu/file-manager"
-            class="text-xs text-tertiary px-1 border rounded-sm border-bgB bg-bgB">DEV</button>
-    </div>
+<div class="m-2">
+
     <h1 class="text-4xl text-center text-primary">GeKo</h1>
 
 
-    <div class="flex flex-col gap-4 w-full h-full text-center text-lg items-center p-2 mt-8">
+    <div class="flex flex-col gap-4 w-full h-full text-center text-lg items-center p-2">
         <input [disabled]="globals.account.name !== ''" class="text-textB max-w-full rounded-sm"
             (keyup.enter)="onSend()" [(ngModel)]="nameInput" type="text" placeholder="Name...">
         <input [disabled]="globals.account.name !== ''" class="text-textB max-w-full rounded-sm"
