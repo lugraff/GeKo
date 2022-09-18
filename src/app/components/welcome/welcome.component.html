@@ -8,6 +8,10 @@
             (keyup.enter)="onSend()" [(ngModel)]="nameInput" type="text" placeholder="Name...">
         <input [disabled]="globals.account.name !== ''" class="text-textB max-w-full rounded-sm"
             (keyup.enter)="onSend()" [(ngModel)]="codeInput" type="text" placeholder="Code...">
+        <div class="flex">
+            <p>Code speichern</p>
+            <input class="scale-[2.5] ml-4" [(ngModel)]="saveCode" type="checkbox">
+        </div>
         <button *ngIf="globals.account.name === ''"
             class="flex rounded-sm px-1 mt-2 select-all bg-selection transition-colors active:bg-primary"
             (click)="onSend()" (keypress.enter)="onSend()">Login

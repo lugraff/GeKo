@@ -1,0 +1,25 @@
+<div class="flex flex-col justify-end gap-2 border border-tertiary rounded-md h-full w-full bg-bgB">
+    <div class="overflow-y-auto">
+        <div *ngFor="let entry of forum">
+            <div [ngClass]="{'text-danger': entry.priority >= 2, 'text-warning': entry.priority === 1, 'text-secondary': entry.priority <= 0}"
+                class="grid grid-cols-6 sm:grid-cols-12 gap-1 px-2 text-sm">
+                <div class="col-span-1 sm:col-span-1">{{entry.name}}</div>
+                <div class="col-span-2 sm:col-span-1">{{entry.datetime}}</div>
+                <div class="col-span-3 sm:col-span-10">{{entry.message}}</div>
+            </div>
+
+        </div>
+    </div>
+    <div class="self-end w-full p-1">
+        <textarea class="text-textB rounded-sm w-full" [(ngModel)]="InputMessage" type="text"
+            placeholder="neue Nachricht...">
+            </textarea>
+        <div class="flex">
+            <div class="grow"></div>
+            <button
+                (click)="onSendMessage()"
+                class="border rounded-md px-1 bg-tertiary text-sm text-textB hover:bg-secondary active:bg-secondary disabled:brightness-50">Senden
+            </button>
+        </div>
+    </div>
+</div>

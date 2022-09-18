@@ -1,0 +1,20 @@
+[
+    {
+        "name": "Jana",
+        "datetime": "18.9 16:21",
+        "message": "Das ist ein langer Text zum Testen des Forums.",
+        "priority": 0
+    },
+    {
+        "name": "Lucas",
+        "datetime": "18.9 16:22",
+        "message": "Wow das ist ja toll!",
+        "priority": 1
+    },
+    {
+        "name": "Steve",
+        "datetime": "18.9 17:42",
+        "message": "Loool",
+        "priority": 2
+    }
+]

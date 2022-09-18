@@ -11,6 +11,7 @@ export class WelcomeComponent implements OnInit {
   nameInput = "";
   codeInput = "";
   message = "";
+  saveCode = false;
   constructor(public globals:GlobalsService, private router:Router) {}
   
   ngOnInit(): void {
@@ -24,7 +25,9 @@ export class WelcomeComponent implements OnInit {
       const result:Savefile = JSON.parse(savefile);
       this.nameInput = result.name;
       this.codeInput = result.code;
-      //this.onSend();
+      if (this.codeInput !== ""){
+        this.onSend();
+      }
     };
   }
 
@@ -89,10 +92,17 @@ export class WelcomeComponent implements OnInit {
         if (request.status === 200){
           this.globals.account = JSON.parse(request.responseText);
           if (this.globals.account.mainCode === ""){
-            const savefile:Savefile = {name:newNameInput,code:""};
+            let savefile:Savefile = {name:"",code:""};
+            if (this.saveCode){
+              savefile = {name:newNameInput,code:newCodeInput};
+            }else{
+              savefile = {name:newNameInput,code:""};
+            };
             localStorage.setItem('save',JSON.stringify(savefile));
             this.GoToMenu();
           }else{
+            const savefile:Savefile = {name:newNameInput,code:""};
+            localStorage.setItem('save',JSON.stringify(savefile));
             this.CheckMainKey();
           }
         }else{
