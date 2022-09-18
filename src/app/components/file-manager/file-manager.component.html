@@ -19,7 +19,7 @@
             <div class="grid grid-cols-2 sm:grid-cols-6 gap-2 text-xs border rounded-md p-1">
 
                 <button
-                    [disabled]="globals.account.mainCode === '' || privateInput === false || securityInput === '' || nameInput === ''"
+                    [disabled]="globals.account.mainCode === '' || privateInput === false || securityInput === '' || nameInput === '' || globals.account.groupCode === ''"
                     (click)="newAccount()"
                     class="border rounded-md p-1 bg-tertiary text-textB hover:bg-secondary active:bg-secondary disabled:brightness-50">neuer
                     Account

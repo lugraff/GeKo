@@ -8,10 +8,10 @@ import { EnterUrls } from '../interfaces/EnterUrls';
 })
 export class GlobalsService {
   namesUrl:string = "7e3276241191";//irgendwo speichern wo nicht neu gebuilded erden muss... GitHub?
-  account: Account = {name:"",mainCode:""};
+  account: Account = {name:"",mainCode:"",groupCode:""};
   fileURLs:string[] = [];
   nameEnterUrls:EnterUrls = {enterUrls:[]};
-  //{"enterUrls":[{"name":"Jana","uri":"0c2051164719"},{"name":"Lucas","uri":"5e3cae5b2a29"},{"name":"Steve","uri":"726579cbbd8b"}]}
+  forumUrl:string = "";
 
   onLogOut(){
     localStorage.clear();
@@ -19,5 +19,6 @@ export class GlobalsService {
     this.account.name = "";
     this.fileURLs = [];
     this.nameEnterUrls = {enterUrls:[]};
+    this.forumUrl = "";
   }
 }

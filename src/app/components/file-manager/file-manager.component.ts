@@ -70,7 +70,7 @@ export class FileManagerComponent implements OnInit {
     if (this.getMainKey){
       mainkey = this.globals.account.mainCode;
     }
-    const newAccount:Account = {name:this.nameInput,mainCode:mainkey};
+    const newAccount:Account = {name:this.nameInput,mainCode:mainkey,groupCode:this.globals.account.groupCode};
     const request = new XMLHttpRequest();
     request.open("POST", "https://json.extendsclass.com/bin", true);
     request.setRequestHeader("Cache-Control", "no-cache, no-store, must-revalidate, post-check=0, pre-check=0");
@@ -97,6 +97,9 @@ export class FileManagerComponent implements OnInit {
   ActivateAccount(newAccount:Account,responseObj:NewFileResponse) :void {
     const request = new XMLHttpRequest();
     request.open("PATCH", "https://json.extendsclass.com/bin/"+this.globals.namesUrl, true);
+    request.setRequestHeader("Cache-Control", "no-cache, no-store, must-revalidate, post-check=0, pre-check=0");
+    request.setRequestHeader("Pragma", "no-cache");
+    request.setRequestHeader("Expires", "0");
     request.setRequestHeader("Content-type", "application/json-patch+json");
     request.onreadystatechange = () => {
       if (request.readyState === 4){
@@ -127,6 +130,9 @@ export class FileManagerComponent implements OnInit {
     };
     const request = new XMLHttpRequest();
     request.open("PATCH", "https://json.extendsclass.com/bin/"+this.globals.namesUrl, true);
+    request.setRequestHeader("Cache-Control", "no-cache, no-store, must-revalidate, post-check=0, pre-check=0");
+    request.setRequestHeader("Pragma", "no-cache");
+    request.setRequestHeader("Expires", "0");
     request.setRequestHeader("Content-type", "application/json-patch+json");
     request.onreadystatechange = () => {
       if (request.readyState === 4){

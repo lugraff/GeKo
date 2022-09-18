@@ -55,7 +55,9 @@ export class WelcomeComponent implements OnInit {
     request.onreadystatechange = () => {
       if (request.readyState === 4){
         if (request.status === 200){
-          this.globals.nameEnterUrls = JSON.parse(request.responseText);
+          const result = JSON.parse(request.responseText);
+          this.globals.nameEnterUrls = result;
+          this.globals.forumUrl = result["forum"];
           this.LogIn(newNameInput,newCodeInput);
         }else{
           if (request.status === 401){
