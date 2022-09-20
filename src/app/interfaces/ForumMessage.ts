@@ -1,6 +1,6 @@
 export interface ForumMessage {
   name: string;
-  datetime:string;
-  message:string;
-  priority:number;
+  datetime: string;
+  message: string;
+  priority: number;
 }

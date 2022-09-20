@@ -16,16 +16,16 @@ import { ForumComponent } from './components/forum/forum.component';
     WelcomeComponent,
     MenuComponent,
     FileManagerComponent,
-    ForumComponent
+    ForumComponent,
   ],
   imports: [
     BrowserModule,
     CommonModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
   ],
-  providers: [HttpClient,DatePipe],
-  bootstrap: [AppComponent]
+  providers: [HttpClient, DatePipe],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

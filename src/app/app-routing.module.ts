@@ -8,21 +8,21 @@ import { AllowedGuardService } from './guards/allowed-guard.service';
 import { LeaveGuardService } from './guards/leave-guard.service';
 
 const routes: Routes = [
-  { path: '',
-   component: WelcomeComponent
-  },
-  { path: 'menu',
-   component: MenuComponent,
-   children: [
-    {
-      path: 'file-manager',
-      component: FileManagerComponent
-    },
-    {
-      path: 'forum',
-      canActivate:[AllowedGuardService],
-      component: ForumComponent
-    }]
+  { path: '', component: WelcomeComponent },
+  {
+    path: 'menu',
+    component: MenuComponent,
+    children: [
+      {
+        path: 'file-manager',
+        component: FileManagerComponent,
+      },
+      {
+        path: 'forum',
+        canActivate: [AllowedGuardService],
+        component: ForumComponent,
+      },
+    ],
   },
   {
     path: '**',
@@ -33,6 +33,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: [LeaveGuardService, AllowedGuardService]
+  providers: [LeaveGuardService, AllowedGuardService],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
