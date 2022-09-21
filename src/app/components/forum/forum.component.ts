@@ -13,16 +13,19 @@ export class ForumComponent implements OnInit, OnDestroy {
   private observSubscription: Subscription;
   forum: ForumMessage[] = [];
   InputMessage = '';
+  InputPriority = 0;
+  selectedMessageT = 0;
   constructor(
     public globals: GlobalsService,
     public datepipe: DatePipe,
     private jsonApi: JsonAPIService
   ) {
+    //TODO interval steuern
     this.observSubscription = interval(9999).subscribe(() => {
       this.onUpdateMessages();
     });
   }
-
+  
   ngOnInit(): void {
     this.onUpdateMessages();
   }
@@ -40,18 +43,27 @@ export class ForumComponent implements OnInit, OnDestroy {
     result.then((value) => {
       if (value.status === 200) {
         this.forum = JSON.parse(value.responseText);
+        this.forum.sort();
+        this.forum.sort((a, b) =>
+          a.timestamp > b.timestamp ? 1 : b.timestamp > a.timestamp ? -1 : 0
+        );
       } else {
       }
     });
   }
 
   onSendMessage() {
+    if (this.InputMessage === '') {
+      return;
+    }
     const currentDateTime = this.datepipe.transform(new Date(), 'E dd H:mm');
+    const timestamp = Date.now();
     const newMessage: ForumMessage = {
       name: this.globals.account.name,
       datetime: currentDateTime!,
+      timestamp: timestamp,
       message: JSON.parse(JSON.stringify(this.InputMessage)),
-      priority: 0,
+      priority: this.InputPriority,
     };
     const result: Promise<XMLHttpRequest> = this.jsonApi.newRequest(
       'PATCH',
@@ -72,4 +84,5 @@ export class ForumComponent implements OnInit, OnDestroy {
       }
     });
   }
+
 }
