@@ -28,6 +28,8 @@
                 class="accent-bgA">
             <div class="grow"></div>
 
+            <div class=" animate-spin w-8 h-8 border-4 rounded-full inline-block" role="status"></div>
+
             <button (click)="onSendMessage()" [disabled]="globals.forumUrl === '' || InputMessage === ''"
                 class="border rounded-md px-1 bg-tertiary text-sm text-textB hover:bg-secondary active:bg-secondary disabled:brightness-50">Senden
             </button>

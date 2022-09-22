@@ -15,6 +15,7 @@ export class ForumComponent implements OnInit, OnDestroy {
   InputMessage = '';
   InputPriority = 0;
   selectedMessageT = 0;
+  updateCounter = 0;
   constructor(
     public globals: GlobalsService,
     public datepipe: DatePipe,
@@ -35,6 +36,7 @@ export class ForumComponent implements OnInit, OnDestroy {
   }
 
   onUpdateMessages() {
+    this.updateCounter += 1;
     const result: Promise<XMLHttpRequest> = this.jsonApi.newRequest(
       'GET',
       '/257970cfbb24',
