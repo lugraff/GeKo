@@ -28,7 +28,9 @@
                 class="accent-bgA">
             <div class="grow"></div>
 
-            <div class=" animate-spin w-8 h-8 border-4 rounded-full inline-block" role="status"></div>
+            <div  [ngClass]="{'opacity-100':loading, 'opacity-0':!loading}"
+                class="spinner-border animate-spin text-primary w-5 h-5 border-4 rounded-full mr-2 transition-opacity duration-300">
+            </div>
 
             <button (click)="onSendMessage()" [disabled]="globals.forumUrl === '' || InputMessage === ''"
                 class="border rounded-md px-1 bg-tertiary text-sm text-textB hover:bg-secondary active:bg-secondary disabled:brightness-50">Senden

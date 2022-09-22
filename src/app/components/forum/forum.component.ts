@@ -16,17 +16,21 @@ export class ForumComponent implements OnInit, OnDestroy {
   InputPriority = 0;
   selectedMessageT = 0;
   updateCounter = 0;
+  loading = false;
   constructor(
     public globals: GlobalsService,
     public datepipe: DatePipe,
     private jsonApi: JsonAPIService
   ) {
-    //TODO interval steuern
+    //TODO interval steuern =< um so mehr neue nachrichten geladen wurden desto schneller wird abgefragt.
+    //                        wurden keine neue nachrichten geladen wird intervall längsamer...
+    //                         wenn nur eine neue nachricht geladen wurde wird schnelligkeit auf minwert gesetzt +??
+    //                       es gibt einen min und max wert
     this.observSubscription = interval(9999).subscribe(() => {
       this.onUpdateMessages();
     });
   }
-  
+
   ngOnInit(): void {
     this.onUpdateMessages();
   }
@@ -36,6 +40,7 @@ export class ForumComponent implements OnInit, OnDestroy {
   }
 
   onUpdateMessages() {
+    this.loading = true;
     this.updateCounter += 1;
     const result: Promise<XMLHttpRequest> = this.jsonApi.newRequest(
       'GET',
@@ -51,6 +56,7 @@ export class ForumComponent implements OnInit, OnDestroy {
         );
       } else {
       }
+      this.loading = false;
     });
   }
 
@@ -58,6 +64,7 @@ export class ForumComponent implements OnInit, OnDestroy {
     if (this.InputMessage === '') {
       return;
     }
+    this.loading = true;
     const currentDateTime = this.datepipe.transform(new Date(), 'E dd H:mm');
     const timestamp = Date.now();
     const newMessage: ForumMessage = {
@@ -84,7 +91,7 @@ export class ForumComponent implements OnInit, OnDestroy {
       } else {
         alert(value.status);
       }
+      this.loading = false;
     });
   }
-
 }
