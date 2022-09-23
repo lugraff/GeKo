@@ -17,16 +17,13 @@ export class ForumComponent implements OnInit, OnDestroy {
   selectedMessageT = 0;
   updateCounter = 0;
   loading = false;
+  interval = 9000;
   constructor(
     public globals: GlobalsService,
     public datepipe: DatePipe,
     private jsonApi: JsonAPIService
   ) {
-    //TODO interval steuern =< um so mehr neue nachrichten geladen wurden desto schneller wird abgefragt.
-    //                        wurden keine neue nachrichten geladen wird intervall längsamer...
-    //                         wenn nur eine neue nachricht geladen wurde wird schnelligkeit auf minwert gesetzt +??
-    //                       es gibt einen min und max wert
-    this.observSubscription = interval(9999).subscribe(() => {
+    this.observSubscription = interval(this.interval).subscribe(() => {
       this.onUpdateMessages();
     });
   }
@@ -49,12 +46,19 @@ export class ForumComponent implements OnInit, OnDestroy {
     );
     result.then((value) => {
       if (value.status === 200) {
-        this.forum = JSON.parse(value.responseText);
-        this.forum.sort();
-        this.forum.sort((a, b) =>
-          a.timestamp > b.timestamp ? 1 : b.timestamp > a.timestamp ? -1 : 0
-        );
-      } else {
+        const newForum: ForumMessage[] = JSON.parse(value.responseText);
+        if (this.forum !== newForum) {
+          this.interval = 5000;
+          this.forum = newForum;
+          this.forum.sort();
+          this.forum.sort((a, b) =>
+            a.timestamp > b.timestamp ? 1 : b.timestamp > a.timestamp ? -1 : 0
+          );
+        } else {
+          if (this.interval < 15000) {
+            this.interval += 1000;
+          }
+        }
       }
       this.loading = false;
     });
