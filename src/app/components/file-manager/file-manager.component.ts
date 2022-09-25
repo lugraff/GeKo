@@ -88,6 +88,13 @@ export class FileManagerComponent implements OnInit {
         const responseObj: NewFileResponse = JSON.parse(value.responseText);
         this.globals.fileURLs.push(responseObj.id);
         this.selectedFileNumber = this.globals.fileURLs.length - 1;
+        navigator.clipboard.writeText(
+          newAccount.name +
+            ' SecCode: ' +
+            securityCode +
+            ' URI: ' +
+            responseObj.id
+        );
         setTimeout(() => this.ActivateAccount(newAccount, responseObj), 333);
       } else {
         alert(value.status);

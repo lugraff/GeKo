@@ -108,7 +108,6 @@ export class ForumComponent implements OnInit, OnDestroy {
     message: string,
     menuPointRef: HTMLElement
   ) {
-    console.log(timestamp);
     if (timestamp === this.selectedMessageT) {
       this.selectedMessageT = 0;
       this.placeholder = 'neue Nachricht...';
