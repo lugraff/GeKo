@@ -8,25 +8,29 @@ import { AllowedGuardService } from './guards/allowed-guard.service';
 import { LeaveGuardService } from './guards/leave-guard.service';
 
 const routes: Routes = [
-  { path: '', component: WelcomeComponent },
+  { path: '', component: WelcomeComponent, data: { animation: 'Z' } },
   {
     path: 'menu',
     component: MenuComponent,
+    data: { animation: 'A' },
     children: [
       {
         path: 'file-manager',
         component: FileManagerComponent,
+        data: { animation: 'B' },
       },
       {
         path: 'forum',
         canActivate: [AllowedGuardService],
         component: ForumComponent,
+        data: { animation: 'C' },
       },
     ],
   },
   {
     path: '**',
     redirectTo: '',
+    data: { animation: 'Z' },
   },
 ];
 

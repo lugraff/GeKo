@@ -5,8 +5,8 @@
         class="overflow-y-auto sm:scrollbar-thin scrollbar-track-bgB scrollbar-thumb-tertiary rounded-md border-2 border-selection shadow-inner shadow-selection">
         <div *ngFor="let entry of forum" #menuPointsRef>
             <div (click)="onMessageClick(entry.timestamp, entry.message, menuPointsRef)"
-                [ngClass]="{'ml-auto bg-bgA': entry.name === globals.account.name, 'text-danger': entry.priority >= 2, 'text-warning': entry.priority === 1, 'text-secondary': entry.priority <= 0, 'shadow-warning':selectedMessageT === entry.timestamp}"
-                class="flex flex-col gap-1 my-2 mr-2 p-2 rounded-md shadow-md shadow-bgB bg-bgB border-warning w-fit">
+                [ngClass]="{'ml-auto bg-bgA': entry.name === globals.account.name, 'text-danger': entry.priority >= 2, 'text-warning': entry.priority === 1, 'text-secondary': entry.priority <= 0, 'border translate-x-4':selectedMessageT === entry.timestamp}"
+                class="flex flex-col gap-1 my-2 mr-2 p-2 rounded-md shadow-md shadow-bgB bg-bgB border-warning w-fit transition-all">
                 <div *ngIf="entry.name !== globals.account.name" class="text-sm opacity-80">{{entry.name}}
                 </div>
                 <div class="opacity-100">{{entry.message}}</div>

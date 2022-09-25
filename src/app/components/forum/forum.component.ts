@@ -72,7 +72,7 @@ export class ForumComponent implements OnInit, OnDestroy {
     this.loading = true;
     let timestamp = Date.now();
     if (this.selectedMessageT !== 0) {
-      timestamp = this.selectedMessageT + 1;
+      timestamp = this.selectedMessageT;
     }
     const currentDateTime = this.datepipe.transform(new Date(), 'E dd H:mm');
     const newMessage: ForumMessage = {
