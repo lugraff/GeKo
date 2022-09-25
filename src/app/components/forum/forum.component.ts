@@ -18,6 +18,7 @@ export class ForumComponent implements OnInit, OnDestroy {
   updateCounter = 0;
   loading = false;
   interval = 9000;
+  placeholder = 'neue Nachricht...';
   constructor(
     public globals: GlobalsService,
     public datepipe: DatePipe,
@@ -69,8 +70,11 @@ export class ForumComponent implements OnInit, OnDestroy {
       return;
     }
     this.loading = true;
+    let timestamp = Date.now();
+    if (this.selectedMessageT !== 0) {
+      timestamp = this.selectedMessageT + 1;
+    }
     const currentDateTime = this.datepipe.transform(new Date(), 'E dd H:mm');
-    const timestamp = Date.now();
     const newMessage: ForumMessage = {
       name: this.globals.account.name,
       datetime: currentDateTime!,
@@ -96,6 +100,26 @@ export class ForumComponent implements OnInit, OnDestroy {
         alert(value.status);
       }
       this.loading = false;
+    });
+  }
+
+  onMessageClick(
+    timestamp: number,
+    message: string,
+    menuPointRef: HTMLElement
+  ) {
+    console.log(timestamp);
+    if (timestamp === this.selectedMessageT) {
+      this.selectedMessageT = 0;
+      this.placeholder = 'neue Nachricht...';
+    } else {
+      this.selectedMessageT = timestamp;
+      this.placeholder = 'Antworten auf... ' + message;
+    }
+    menuPointRef.scrollIntoView({
+      behavior: 'smooth',
+      inline: 'center',
+      block: 'center',
     });
   }
 }
