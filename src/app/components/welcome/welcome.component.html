@@ -1,5 +1,5 @@
 <div class="m-2">
-    <h1 class="text-4xl text-center text-primary">GeKo</h1>
+    <h1 class="text-4xl text-center text-primary font-semibold">GeKo</h1>
 
 
     <div class="flex flex-col gap-4 w-full h-full text-center text-lg items-center p-2">
@@ -9,7 +9,7 @@
             (keyup.enter)="onSend()" [(ngModel)]="codeInput" type="text" placeholder="Code...">
         <div class="flex">
             <p>Code speichern</p>
-            <input class="scale-[2.5] ml-4" [(ngModel)]="saveCode" type="checkbox">
+            <input class="scale-[2] ml-4 accent-selection" [(ngModel)]="saveCode" type="checkbox">
         </div>
         <button *ngIf="globals.account.name === ''"
             class="flex rounded-sm px-1 mt-2 select-all bg-selection transition-colors active:bg-primary"
