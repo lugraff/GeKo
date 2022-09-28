@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ChartComponent } from './components/chart/chart.component';
 import { FileManagerComponent } from './components/file-manager/file-manager.component';
 import { ForumComponent } from './components/forum/forum.component';
 import { MenuComponent } from './components/menu/menu.component';
@@ -12,18 +13,24 @@ const routes: Routes = [
   {
     path: 'menu',
     component: MenuComponent,
-    data: { animation: 'A' },
+    data: { animation: 'default' },
     children: [
       {
         path: 'file-manager',
         component: FileManagerComponent,
-        data: { animation: 'B' },
+        data: { animation: 'default' },
       },
       {
         path: 'forum',
         canActivate: [AllowedGuardService],
         component: ForumComponent,
-        data: { animation: 'C' },
+        data: { animation: 'default' },
+      },
+      {
+        path: 'chart',
+        canActivate: [AllowedGuardService],
+        component: ChartComponent,
+        data: { animation: 'default' },
       },
     ],
   },

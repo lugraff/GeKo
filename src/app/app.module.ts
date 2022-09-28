@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
 import { MenuComponent } from './components/menu/menu.component';
 import { FileManagerComponent } from './components/file-manager/file-manager.component';
 import { ForumComponent } from './components/forum/forum.component';
+import { ChartComponent } from './components/chart/chart.component';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,7 @@ import { ForumComponent } from './components/forum/forum.component';
     MenuComponent,
     FileManagerComponent,
     ForumComponent,
+    ChartComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,6 +29,7 @@ import { ForumComponent } from './components/forum/forum.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    NgChartsModule,
   ],
   providers: [HttpClient, DatePipe],
   bootstrap: [AppComponent],
