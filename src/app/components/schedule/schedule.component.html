@@ -1,0 +1,18 @@
+<div class="w-full h-full bg-selection">
+    <div class="grid grid-rows-12">
+        <div>Februar 2023</div>
+        <div class="grid grid-cols-12 bg-primary">
+
+            <div *ngFor="let day of timeline">{{day}}.</div>
+            
+        </div>
+    </div>
+    <div *ngFor="let room of rooms2; index as i" class="">
+        <div class="grid grid-cols-12 ">
+            <button *ngFor="let day of timeline" (mousedown)="onDown(day, room.name, i)" (mouseup)="onUp(day)"
+                class="border active:brightness-50 hover:border-bgA h-6"
+                [ngClass]="{'bg-danger':room.name === 'Z'+(i+1) && room.days.includes(day)}">
+            </button>
+        </div>
+    </div>
+</div>

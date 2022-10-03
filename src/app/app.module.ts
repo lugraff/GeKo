@@ -12,6 +12,7 @@ import { FileManagerComponent } from './components/file-manager/file-manager.com
 import { ForumComponent } from './components/forum/forum.component';
 import { ChartComponent } from './components/chart/chart.component';
 import { NgChartsModule } from 'ng2-charts';
+import { ScheduleComponent } from './components/schedule/schedule.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { NgChartsModule } from 'ng2-charts';
     FileManagerComponent,
     ForumComponent,
     ChartComponent,
+    ScheduleComponent,
   ],
   imports: [
     BrowserModule,

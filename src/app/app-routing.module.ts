@@ -4,6 +4,7 @@ import { ChartComponent } from './components/chart/chart.component';
 import { FileManagerComponent } from './components/file-manager/file-manager.component';
 import { ForumComponent } from './components/forum/forum.component';
 import { MenuComponent } from './components/menu/menu.component';
+import { ScheduleComponent } from './components/schedule/schedule.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { AllowedGuardService } from './guards/allowed-guard.service';
 import { LeaveGuardService } from './guards/leave-guard.service';
@@ -30,6 +31,11 @@ const routes: Routes = [
         path: 'chart',
         canActivate: [AllowedGuardService],
         component: ChartComponent,
+        data: { animation: 'default' },
+      },
+      {
+        path: 'schedule',
+        component: ScheduleComponent,
         data: { animation: 'default' },
       },
     ],
