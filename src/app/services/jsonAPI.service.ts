@@ -43,9 +43,7 @@ export class JsonAPIService {
       request.setRequestHeader('Private', privateFile);
     }
     if (operator !== '') {
-      request.send(
-        '[{"op":"' + operator + '","path":"' + path + '","value":' + data + '}]'
-      );
+      request.send('[{"op":"' + operator + '","path":"' + path + data + '"}]');
     } else if (newFileData !== '') {
       request.send(newFileData);
     } else {
