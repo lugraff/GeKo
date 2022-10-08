@@ -61,6 +61,13 @@ export class FileManagerComponent implements OnInit {
   }
 
   newAccount(): void {
+    for (const user of this.globals.nameEnterUrls.enterUrls) {
+      console.log(JSON.stringify(user));
+      if (user.name === this.nameInput){
+        alert("Name ist bereits vergeben!");
+        return;
+      }
+    }
     const securityCode = this.securityInput;
     let mainkey = '';
     if (this.userGetMainKey) {
