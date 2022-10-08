@@ -5,6 +5,7 @@ import { FileManagerComponent } from './components/file-manager/file-manager.com
 import { ForumComponent } from './components/forum/forum.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
+import { TexteditorComponent } from './components/texteditor/texteditor.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { AllowedGuardService } from './guards/allowed-guard.service';
 import { LeaveGuardService } from './guards/leave-guard.service';
@@ -35,7 +36,14 @@ const routes: Routes = [
       },
       {
         path: 'schedule',
+        canActivate: [AllowedGuardService],
         component: ScheduleComponent,
+        data: { animation: 'default' },
+      },
+      {
+        path: 'text-editor',
+        canActivate: [AllowedGuardService],
+        component: TexteditorComponent,
         data: { animation: 'default' },
       },
     ],

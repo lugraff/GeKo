@@ -13,6 +13,7 @@ import { ForumComponent } from './components/forum/forum.component';
 import { ChartComponent } from './components/chart/chart.component';
 import { NgChartsModule } from 'ng2-charts';
 import { ScheduleComponent } from './components/schedule/schedule.component';
+import { TexteditorComponent } from './components/texteditor/texteditor.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ScheduleComponent } from './components/schedule/schedule.component';
     ForumComponent,
     ChartComponent,
     ScheduleComponent,
+    TexteditorComponent,
   ],
   imports: [
     BrowserModule,

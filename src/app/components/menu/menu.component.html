@@ -8,18 +8,23 @@
             Forum
         </button>
         <div>|</div>
-        <button class="text-secondary hover:text-primary active:text-primary" routerLink="./chart">
+        <!-- <button class="text-secondary hover:text-primary active:text-primary" routerLink="./chart">
             Chart
-        </button>
-        <div>|</div>
+        </button> -->
+        <!-- <div>|</div> -->
         <button *ngIf="globals.account.mainCode !== ''" class="text-secondary hover:text-primary active:text-primary"
             routerLink="./file-manager">
             Datei Manager
         </button>
         <div>|</div>
-        <button class="text-secondary hover:text-primary active:text-primary" routerLink="./schedule">
+        <!-- <button class="text-secondary hover:text-primary active:text-primary" routerLink="./schedule">
             Termin Planer
         </button>
+        <div>|</div> -->
+        <button class="text-secondary hover:text-primary active:text-primary" routerLink="./text-editor">
+            Text Editor
+        </button>
+        
 
     </div>
     <div [@theTrigger]="prepareRoute(outlet)" class="h-[calc(100vh-1.5rem)]">
