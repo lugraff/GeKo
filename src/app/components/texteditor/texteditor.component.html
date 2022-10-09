@@ -1,15 +1,18 @@
 <div class="flex flex-col gap-2 items-start w-full h-full p-1">
 
-    <div *ngFor="let chapter of book; let i = index">
-        <div class="flex ">
-            <button (click)="onSelectChapter(i)"
-                class="hover:text-primary bg-bgA border rounded-md px-2">{{chapter.titel}}</button>
-            <button (click)="onDeleteChapter(i)"
-                class="hover:text-primary bg-bgA border rounded-md px-2 ml-2">-</button>
+    <div class="w-full h-32 overflow-y-auto">
+        <div *ngFor="let chapter of book; let i = index">
+            <div class="flex mb-1">
+                <button (click)="onSelectChapter(i)"
+                    class="hover:text-primary bg-bgA border rounded-md px-2">{{chapter.titel}}</button>
+                <button (click)="onDeleteChapter(i)"
+                    class="hover:text-primary bg-bgA border rounded-md px-2 ml-2">-</button>
+            </div>
         </div>
+        <button *ngIf="selectedFileNumber >= 0" (click)="onNewChapter()"
+            class="hover:text-primary bg-bgA border rounded-md px-2">+ Neue Seite</button>
     </div>
-    <button *ngIf="selectedFileNumber >= 0" (click)="onNewChapter()"
-        class="hover:text-primary bg-bgA border rounded-md px-2">+ Neue Seite</button>
+
     <input type="text" [(ngModel)]="titel" class="select-text w-full bg-bgB" placeholder="Titel...">
     <textarea [(ngModel)]="text" spellcheck="false" placeholder="Text..."
         class="select-all w-full bg-bgB h-full min-h-[8rem]">{{text}}</textarea>
