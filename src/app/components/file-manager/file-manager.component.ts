@@ -23,6 +23,7 @@ export class FileManagerComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {}
+  //TODO Reload URLS!!!
 
   onSendCode() {
     if (this.codeInput.length !== 36) {
@@ -63,8 +64,8 @@ export class FileManagerComponent implements OnInit {
   newAccount(): void {
     for (const user of this.globals.nameEnterUrls.enterUrls) {
       console.log(JSON.stringify(user));
-      if (user.name === this.nameInput){
-        alert("Name ist bereits vergeben!");
+      if (user.name === this.nameInput) {
+        alert('Name ist bereits vergeben!');
         return;
       }
     }
