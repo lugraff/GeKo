@@ -6,6 +6,7 @@ import { ForumComponent } from './components/forum/forum.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { TexteditorComponent } from './components/texteditor/texteditor.component';
+import { TypeWriterComponent } from './components/type-writer/type-writer.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { AllowedGuardService } from './guards/allowed-guard.service';
 import { LeaveGuardService } from './guards/leave-guard.service';
@@ -44,6 +45,12 @@ const routes: Routes = [
         path: 'text-editor',
         canActivate: [AllowedGuardService],
         component: TexteditorComponent,
+        data: { animation: 'default' },
+      },
+      {
+        path: 'type-writer',
+        //canActivate: [AllowedGuardService],
+        component: TypeWriterComponent,
         data: { animation: 'default' },
       },
     ],
