@@ -5,14 +5,11 @@ import { Component, HostListener, OnInit } from '@angular/core';
   templateUrl: './type-writer.component.html',
 })
 export class TypeWriterComponent implements OnInit {
-  typeText = `WhatsApp: Sicherheitslücke ermöglicht Zugriff auf das Smartphone. Kürzlich gab die Betreibergesellschaft von WhatsApp eine neue Sicherheitslücke bekannt, 
-              bei der Hacker das Smartphone übernehmen können. Die Betreibergesellschaft von WhatsApp hat Ende September eine Sicherheitslücke veröffentlicht, 
-              die man ausnutzen konnte, indem man dem Empfänger ein speziell präpariertes Video geschickt oder einen Videoanruf mit ihm durchgeführt hat. 
-              Daraufhin war die Kontrolle des angerufenen Gerätes möglich. Auch hätte man danach unabhängig vom Betriebssystem alle Dateien des Smartphones kopieren können.`;
+  typeText = "WhatsApp: Sicherheitslücke ermöglicht Zugriff auf das Smartphone. Kürzlich gab die Betreibergesellschaft von WhatsApp eine neue Sicherheitslücke bekannt, bei der Hacker das Smartphone übernehmen können. Die Betreibergesellschaft von WhatsApp hat Ende September eine Sicherheitslücke veröffentlicht, die man ausnutzen konnte, indem man dem Empfänger ein speziell präpariertes Video geschickt oder einen Videoanruf mit ihm durchgeführt hat. Daraufhin war die Kontrolle des angerufenen Gerätes möglich. Auch hätte man danach unabhängig vom Betriebssystem alle Dateien des Smartphones kopieren können.";
   chars: string[] = [];
   finishedText = '';
   letter: string = '';
-  futureText = '';
+  futureText = this.typeText;
   blacklist: string[] = [
     'Enter',
     'Shift',
@@ -31,9 +28,6 @@ export class TypeWriterComponent implements OnInit {
   ngOnInit(): void {
     for (let index = 0; index < this.typeText.length; index++) {
       this.chars.push(this.typeText[index]);
-    }
-    for (let index = 0; index < 64; index++) {
-      this.futureText += this.chars[index];
     }
     this.getNextChar();
   }

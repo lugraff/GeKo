@@ -1,9 +1,8 @@
-<div class="flex flex-col justify-center items-center w-full h-full p-4">
-    <div class="flex">
+<div class="flex flex-col items-center w-full h-full px-4 pt-16 rounded-md">
+    <div class="flex max-w-full w-full px-16 py-4 border border-tertiary rounded-md bg-bgB">
 
-        <pre class="text-primary">{{finishedText}}</pre>
+        <pre class="text-primary whitespace-pre-wrap w-1/2 text-right">{{finishedText | textWrapper:24:true}}</pre>
         <pre class="text-danger">{{letter}}</pre>
-        <pre class="">{{futureText}}</pre>
+        <pre class="whitespace-pre-wrap w-1/2 ">{{futureText | textWrapper:24:false}}</pre>
     </div>
 </div>
-<!-- (keypress)="newChar(inputText.charAt(inputText.length-1))" -->

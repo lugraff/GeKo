@@ -15,6 +15,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { TexteditorComponent } from './components/texteditor/texteditor.component';
 import { TypeWriterComponent } from './components/type-writer/type-writer.component';
+import { TextWrapperPipe } from './services/text-wrapper.pipe';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { TypeWriterComponent } from './components/type-writer/type-writer.compon
     ScheduleComponent,
     TexteditorComponent,
     TypeWriterComponent,
+    TextWrapperPipe,
   ],
   imports: [
     BrowserModule,
