@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Account } from '../interfaces/Account';
 import { EnterUrls } from '../interfaces/EnterUrls';
 import { TextEditorUrl } from '../interfaces/TextEditorUrl';
+import { TypeWriter } from '../interfaces/TypeWriter';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,7 @@ export class GlobalsService {
   nameEnterUrls: EnterUrls = { enterUrls: [] };
   forumUrl: string = '';
   textEditorUrls: TextEditorUrl[] = [];
+  typeWriterUrls: TypeWriter[] = [];
 
   onLogOut() {
     localStorage.clear();
