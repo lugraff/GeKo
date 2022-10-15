@@ -16,6 +16,7 @@ import { ScheduleComponent } from './components/schedule/schedule.component';
 import { TexteditorComponent } from './components/texteditor/texteditor.component';
 import { TypeWriterComponent } from './components/type-writer/type-writer.component';
 import { TextWrapperPipe } from './services/text-wrapper.pipe';
+import { SpaceToLinePipe } from './services/space-to-line.pipe';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { TextWrapperPipe } from './services/text-wrapper.pipe';
     TexteditorComponent,
     TypeWriterComponent,
     TextWrapperPipe,
+    SpaceToLinePipe,
   ],
   imports: [
     BrowserModule,
