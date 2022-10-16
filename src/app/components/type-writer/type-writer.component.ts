@@ -1,5 +1,6 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
+import { NewFileResponse } from 'src/app/interfaces/NewFileResponse';
 import { TypeWriterFile } from 'src/app/interfaces/TypeWriterFile';
 import { GlobalsService } from 'src/app/services/globals.service';
 import { JsonAPIService } from 'src/app/services/jsonAPI.service';
@@ -78,7 +79,12 @@ export class TypeWriterComponent implements OnInit, OnDestroy {
 
   onNewText(): void {
     this.timeTotal = 0;
+    this.seconds = '00';
+    this.minutes = '00';
+    this.hours = '00';
     this.finishedText = '';
+    this.futureText = '';
+    this.letter = '';
     this.result = '';
   }
 
@@ -137,16 +143,17 @@ export class TypeWriterComponent implements OnInit, OnDestroy {
       this.result =
         this.minutes + ':' + this.seconds + '  Score: ' + this.score;
     }
-    this.finishedText = '';
-    this.futureText = '';
-    this.letter = '';
     this.timeTotal = 0;
     this.seconds = '00';
     this.minutes = '00';
     this.hours = '00';
+    this.finishedText = '';
+    this.futureText = '';
+    this.letter = '';
   }
 
   onSelectTitel(index: number): void {
+    this.onNewText();
     this.selectedFileNumber = index;
     const result: Promise<XMLHttpRequest> = this.jsonApi.newRequest(
       'GET',
@@ -159,6 +166,7 @@ export class TypeWriterComponent implements OnInit, OnDestroy {
         const typeWriterFile: TypeWriterFile = JSON.parse(value.responseText);
         this.futureText = typeWriterFile.text;
         this.titel = typeWriterFile.titel;
+        this.genre = typeWriterFile.genre;
       } else {
         alert(value.status);
       }
@@ -168,15 +176,78 @@ export class TypeWriterComponent implements OnInit, OnDestroy {
   onSaveNewText(): void {
     if (this.titel === '') {
       alert('Wähle einen Titel!');
+      return;
     }
     if (this.genre === '') {
       alert('Wähle einen Genre!');
+      return;
     }
     if (this.futureText.length < this.minChars) {
       alert(
         'Der Text muss mindestens ' + this.minChars + ' Zeichen lang sein!'
       );
+      return;
     }
+    const newText: TypeWriterFile = {
+      titel: this.titel,
+      genre: this.genre,
+      text: this.futureText,
+    };
+    const result: Promise<XMLHttpRequest> = this.jsonApi.newRequest(
+      'POST',
+      '',
+      this.globals.account.groupCode,
+      this.globals.account.mainCode,
+      '',
+      '',
+      '',
+      '',
+      'true',
+      JSON.stringify(newText)
+    );
+    result.then((value) => {
+      if (value.status === 201) {
+        const responseObj: NewFileResponse = JSON.parse(value.responseText);
+        this.globals.typeWriterUrls.push({
+          titel: this.titel,
+          genre: this.genre,
+          letterCount: this.futureText.length,
+          url: responseObj.id,
+          scoreUrl: '???',
+        });
+        this.selectedFileNumber = this.globals.typeWriterUrls.length - 1;
+        setTimeout(() => this.addFileUrl(), 333);
+      } else {
+        alert(value.status);
+      }
+    });
+  }
+  addFileUrl() {
+    const result: Promise<XMLHttpRequest> = this.jsonApi.newRequest(
+      'PUT',
+      '/756c2b2f468b',
+      this.globals.account.groupCode,
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      JSON.stringify(this.globals.typeWriterUrls)
+    );
+    result.then((value) => {
+      if (value.status === 200) {
+        alert('Neue Datei erstellt.');
+      } else if (value.status === 401) {
+        alert('Falscher Security Code!');
+      } else if (value.status === 429) {
+        alert('Abruflimit überschritten!');
+      } else if (value.status === 413) {
+        alert('Datei zu groß!');
+      } else {
+        alert(value.status);
+      }
+    });
   }
 }
 
