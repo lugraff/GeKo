@@ -39,6 +39,8 @@
             </div>
             <button *ngIf="!arcadeMode && globals.account.mainCode !== ''" (click)="onSaveNewText()"
                 class="rounded-md bg-bgA hover:bg-selection w-fit mt-4 p-1 self-center active:bg-primary">Speichern</button>
+            <button *ngIf="!arcadeMode && globals.account.mainCode !== ''" (click)="onDeleteText()"
+                class="rounded-md bg-bgA hover:bg-selection w-fit mt-4 p-1 self-center active:bg-primary">Löschen</button>
             <button *ngIf="!arcadeMode" [disabled]="result === ''" (click)="onNewText()"
                 class="rounded-md bg-bgA hover:bg-selection w-fit mt-4 p-1 self-center disabled:pointer-events-none disabled:brightness-50 active:bg-primary">Neu</button>
         </div>

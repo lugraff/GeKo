@@ -222,7 +222,7 @@ export class TypeWriterComponent implements OnInit, OnDestroy {
       }
     });
   }
-  addFileUrl() {
+  addFileUrl(): void {
     const result: Promise<XMLHttpRequest> = this.jsonApi.newRequest(
       'PUT',
       '/756c2b2f468b',
@@ -244,6 +244,62 @@ export class TypeWriterComponent implements OnInit, OnDestroy {
         alert('Abruflimit überschritten!');
       } else if (value.status === 413) {
         alert('Datei zu groß!');
+      } else {
+        alert(value.status);
+      }
+    });
+  }
+
+  onDeleteText(): void {
+    if (this.selectedFileNumber < 0) {
+      alert('Wähle zuerst eine Datei!');
+    }
+    const result: Promise<XMLHttpRequest> = this.jsonApi.newRequest(
+      'DELETE',
+      '/' + this.globals.typeWriterUrls[this.selectedFileNumber].url,
+      this.globals.account.groupCode
+    );
+    result.then((value) => {
+      if (value.status === 200) {
+        setTimeout(() => this.deleteFileURL(), 333);
+      } else {
+        alert(value.status);
+      }
+    });
+  }
+  deleteFileURL(): void {
+    let fileIndex = -1;
+    for (let index = 0; index < this.globals.typeWriterUrls.length; index++) {
+      if (
+        this.globals.typeWriterUrls[index].url ===
+        this.globals.typeWriterUrls[this.selectedFileNumber].url
+      ) {
+        fileIndex = index;
+        break;
+      }
+    }
+    if (fileIndex === -1) {
+      alert('Pfad nicht gefunden.');
+      return;
+    }
+    const result: Promise<XMLHttpRequest> = this.jsonApi.newRequest(
+      'PATCH',
+      '/756c2b2f468b',
+      this.globals.account.groupCode,
+      '',
+      'json-patch+json',
+      'remove',
+      '/',
+      fileIndex.toString()
+    );
+    result.then((value) => {
+      if (value.status === 200) {
+        this.globals.typeWriterUrls.splice(this.selectedFileNumber, 1);
+        this.selectedFileNumber = -1;
+        this.futureText = '';
+        this.titel = '';
+        this.genre = '';
+        alert('Datei gelöscht.');
       } else {
         alert(value.status);
       }

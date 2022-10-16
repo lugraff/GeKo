@@ -120,7 +120,6 @@ export class TexteditorComponent implements OnInit {
       }
     });
   }
-
   deleteFileURL() {
     let fileIndex = -1;
     for (let index = 0; index < this.globals.textEditorUrls.length; index++) {
