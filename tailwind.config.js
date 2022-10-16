@@ -39,7 +39,7 @@ module.exports = {
         },
       },
       animation: {
-        waving: "wave 2s linear infinite",
+        waving: "wave 4s ease infinite",
         hover: "hover 3s linear infinite",
         move: "move 1s linear 1",
       },

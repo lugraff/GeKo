@@ -12,12 +12,11 @@ export class TypeWriterComponent implements OnInit, OnDestroy {
   selectedFileNumber = -1;
   arcadeMode = false;
   pause = true;
-  titel = 'Titel';
+  titel = '';
   futureText = '';
   finishedText = '';
   letter: string = '';
-  textSideLenght = 32;
-  value = 0;
+  textSideLength = 32;
   lastKey: string = '';
   lastTimeStamp: number = 0;
   timeTotal: number = 0;
@@ -27,6 +26,8 @@ export class TypeWriterComponent implements OnInit, OnDestroy {
   result: string = '';
   score: number = 0;
   interval = 1000;
+  minChars = 100;
+  genre = '';
   blacklist: string[] = [
     'Enter',
     'Control',
@@ -162,6 +163,20 @@ export class TypeWriterComponent implements OnInit, OnDestroy {
         alert(value.status);
       }
     });
+  }
+
+  onSaveNewText(): void {
+    if (this.titel === '') {
+      alert('Wähle einen Titel!');
+    }
+    if (this.genre === '') {
+      alert('Wähle einen Genre!');
+    }
+    if (this.futureText.length < this.minChars) {
+      alert(
+        'Der Text muss mindestens ' + this.minChars + ' Zeichen lang sein!'
+      );
+    }
   }
 }
 

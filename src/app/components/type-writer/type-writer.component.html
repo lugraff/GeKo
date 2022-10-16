@@ -1,29 +1,31 @@
-<div class="flex flex-col items-center w-full h-full px-4 pt-2 rounded-md">
-    <div class="flex self-start items-start gap-2 w-full">
+<div class="flex flex-col items-center w-full h-full px-4 rounded-md">
+    <div class="flex self-start items-center w-full px-10 gap-2">
         <svg *ngIf="!pause" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" (click)="pause = true"
-            class="w-6 h-6 stroke-[1.5] stroke-warning fill-transparent">
+            class="w-9 h-9 stroke-[1.5] stroke-warning fill-transparent">
             <path stroke-linecap="round" stroke-linejoin="round"
                 d="M14.25 9v6m-4.5 0V9M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
         <svg *ngIf="pause && futureText.length" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-            (click)="pause = false" class="w-6 h-6 stroke-[1.5] stroke-warning fill-transparent">
+            (click)="pause = false" class="w-9 h-9 stroke-[1.5] stroke-warning fill-transparent">
             <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             <path stroke-linecap="round" stroke-linejoin="round"
                 d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112z" />
         </svg>
 
-        <div [ngClass]="pause ? 'text-tertiary':'text-warning animate-pulse'" class="flex w-full">
+        <div [ngClass]="pause ? 'text-tertiary':'text-warning'" class="flex my-auto text-lg font-thin">
             <div [ngClass]="{'hidden':hours === '00'}">{{hours}}:</div>
             <div *ngIf="futureText.length">{{minutes}}:{{seconds}}</div>
-            <div class="mx-auto text-xl text-danger animate-waving m-4">{{result}}</div>
+            <div class="h-16 ml-96 text-right text-danger text-4xl animate-waving">{{result}}</div>
         </div>
     </div>
-    <div
-        class="flex max-w-full w-full px-16 py-4 border border-tertiary rounded-md bg-gradient-to-r from-bgB via-bgA to-bgB text-2xl font-thin">
-        <pre
-            class="text-primary whitespace-pre-wrap w-1/2 text-right">{{finishedText | textWrapper:textSideLenght:true}}</pre>
-        <pre class="text-danger">{{letter | spaceToLine}}</pre>
-        <pre class="whitespace-pre-wrap w-1/2 ">{{futureText | textWrapper:textSideLenght:false}}</pre>
+    <div class="flex max-w-full w-full px-16 py-4 border rounded-md bg-gradient-to-r from-bgB via-bgA to-bgB text-2xl font-thin"
+        [ngClass]="pause ? 'border-tertiary':'border-danger'">
+        <div *ngIf="letter === '' && !pause" class="text-xs text-tertiary animate-pulse">Drücke eine belibige Taste um
+            zu Starten!</div>
+        <pre *ngIf="!pause"
+            class="text-primary whitespace-pre-wrap w-1/2 text-right">{{finishedText | textWrapper:textSideLength:true}}</pre>
+        <pre *ngIf="!pause" class="text-danger">{{letter | spaceToLine}}</pre>
+        <pre *ngIf="!pause" class="whitespace-pre-wrap w-1/2 ">{{futureText | textWrapper:textSideLength:false}}</pre>
     </div>
     <input type="range" [value]="finishedText.length" [max]="futureText.length + finishedText.length"
         class="accent-primary w-full pointer-events-none opacity-50 mt-4">
@@ -35,18 +37,21 @@
                 <div>Arcade Mode</div>
 
             </div>
-            <button *ngIf="!arcadeMode" [disabled]="futureText.length < 8"
+            <button *ngIf="!arcadeMode" [disabled]="futureText.length < 8" (click)="onSaveNewText()"
                 class="rounded-md bg-bgA hover:bg-selection w-fit mt-4 p-1 self-center disabled:pointer-events-none disabled:brightness-50 active:bg-primary">Speichern</button>
             <button *ngIf="!arcadeMode" [disabled]="result === ''" (click)="onNewText()"
                 class="rounded-md bg-bgA hover:bg-selection w-fit mt-4 p-1 self-center disabled:pointer-events-none disabled:brightness-50 active:bg-primary">Neu</button>
         </div>
-        <img src="/assets/Keyboard.png" alt="keyboard" class="m-16 rounded-lg brightness-90">
+        <img src="/assets/Keyboard.png" alt="keyboard" class="m-2 rounded-lg brightness-90">
     </div>
 
-
+    <input *ngIf="pause && !arcadeMode && result === ''" type="text" [(ngModel)]="titel"
+        class="bg-bgB w-full px-1 border border-tertiary border-b-transparent" placeholder="Titel...">
+    <input *ngIf="pause && !arcadeMode && result === ''" type="text" [(ngModel)]="genre"
+        class="bg-bgB w-full px-1 text-sm border border-tertiary border-b-transparent" placeholder="Genre...">
     <textarea *ngIf="pause && !arcadeMode && result === ''" [(ngModel)]="futureText" spellcheck="false"
         placeholder="Text..."
-        class="bg-bgB w-full grow scrollbar-thin scrollbar-track-bgB scrollbar-thumb-selection text-xs p-1 border"></textarea>
+        class="bg-bgB w-full grow scrollbar-thin scrollbar-track-bgB scrollbar-thumb-selection text-xs p-1 border border-tertiary"></textarea>
     <div *ngIf="pause && arcadeMode"
         class="border border-tertiary w-full grow scrollbar-thin scrollbar-track-bgB scrollbar-thumb-selection">
         <div *ngFor="let file of globals.typeWriterUrls; let i = index">
