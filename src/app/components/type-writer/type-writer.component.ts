@@ -79,6 +79,7 @@ export class TypeWriterComponent implements OnInit, OnDestroy {
 
   onNewText(): void {
     this.timeTotal = 0;
+    this.score = 0;
     this.seconds = '00';
     this.minutes = '00';
     this.hours = '00';
@@ -110,6 +111,8 @@ export class TypeWriterComponent implements OnInit, OnDestroy {
         }
       } else if (this.letter === '') {
         this.getNextChar();
+      } else {
+        this.score -= 1;
       }
     }
     this.lastKey = key.key;
@@ -117,7 +120,7 @@ export class TypeWriterComponent implements OnInit, OnDestroy {
   }
 
   getNextChar(): void {
-    if (this.futureText.length <= 1) {
+    if (this.futureText.length <= 0) {
       this.finishedRound();
     } else {
       if (this.finishedText.length <= 1) {
@@ -133,6 +136,9 @@ export class TypeWriterComponent implements OnInit, OnDestroy {
 
   finishedRound(): void {
     this.pause = true;
+    this.score +=
+      this.finishedText.length +
+      (this.finishedText.length / this.timeTotal) * 100;
     if (this.hours !== '00') {
       this.result =
         this.hours +
