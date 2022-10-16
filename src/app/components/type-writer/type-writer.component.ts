@@ -153,6 +153,7 @@ export class TypeWriterComponent implements OnInit, OnDestroy {
     this.finishedText = '';
     this.futureText = '';
     this.letter = '';
+    //TODO Score berechnen, Zeiten Schreiben, HTTP-Post, frage ob post...,
   }
 
   onSelectTitel(index: number): void {
@@ -315,10 +316,7 @@ export class TypeWriterComponent implements OnInit, OnDestroy {
 Score JsonFile:
 [user:[timestamps],score]
 
--User können neue Texte erstellen
--Dev kann Texte löschen
+-User können neue Texte erstellen-> geht nur wenn sie zuvor von Dev erstellt wurden.
 
 -Genre->Text Auswählen
--Am Ende Bestätigen dass Score aufgenommen wird...
--Write Json Score
 */
