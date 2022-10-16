@@ -147,10 +147,14 @@ export class TypeWriterComponent implements OnInit, OnDestroy {
         ':' +
         this.seconds +
         '  Score: ' +
-        this.score;
+        Math.round(this.score);
     } else {
       this.result =
-        this.minutes + ':' + this.seconds + '  Score: ' + this.score;
+        this.minutes +
+        ':' +
+        this.seconds +
+        '  Score: ' +
+        Math.round(this.score);
     }
     this.timeTotal = 0;
     this.seconds = '00';
@@ -159,7 +163,7 @@ export class TypeWriterComponent implements OnInit, OnDestroy {
     this.finishedText = '';
     this.futureText = '';
     this.letter = '';
-    //TODO Score berechnen, Zeiten Schreiben, HTTP-Post, frage ob post...,
+    //TODO Score berechnen, Zeiten Schreiben, HTTP-Post, frage ob post..., ZeichenAnzahl zeigen und Total, Score Bonus bei keinem Fehler,
   }
 
   onSelectTitel(index: number): void {
