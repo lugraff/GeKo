@@ -120,6 +120,9 @@ export class TypeWriterComponent implements OnInit, OnDestroy {
     if (this.futureText.length <= 1) {
       this.finishedRound();
     } else {
+      if (this.finishedText.length <= 1) {
+        this.futureText = this.futureText.replace(/\n|\r/g, '');
+      }
       const char = this.futureText.charAt(0);
       if (char !== undefined) {
         this.letter = char;
