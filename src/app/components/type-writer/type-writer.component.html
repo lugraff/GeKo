@@ -44,7 +44,7 @@
             <button *ngIf="!arcadeMode" [disabled]="result === ''" (click)="onNewText()"
                 class="rounded-md bg-bgA hover:bg-selection w-fit mt-4 p-1 self-center disabled:pointer-events-none disabled:brightness-50 active:bg-primary">Neu</button>
         </div>
-        <img src="/assets/Keyboard.png" alt="keyboard" class="m-2 rounded-lg brightness-90">
+        <img src="assets/Keyboard.png" alt="keyboard" class="m-2 rounded-lg brightness-90">
     </div>
 
     <input *ngIf="pause && !arcadeMode && result === ''" type="text" [(ngModel)]="titel"
