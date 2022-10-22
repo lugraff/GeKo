@@ -17,6 +17,7 @@ import { TexteditorComponent } from './components/texteditor/texteditor.componen
 import { TypeWriterComponent } from './components/type-writer/type-writer.component';
 import { TextWrapperPipe } from './services/text-wrapper.pipe';
 import { SpaceToLinePipe } from './services/space-to-line.pipe';
+import { DotknotComponent } from './components/dotknot/dotknot.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { SpaceToLinePipe } from './services/space-to-line.pipe';
     TypeWriterComponent,
     TextWrapperPipe,
     SpaceToLinePipe,
+    DotknotComponent,
   ],
   imports: [
     BrowserModule,

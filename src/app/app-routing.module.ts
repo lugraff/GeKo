@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ChartComponent } from './components/chart/chart.component';
+import { DotknotComponent } from './components/dotknot/dotknot.component';
 import { FileManagerComponent } from './components/file-manager/file-manager.component';
 import { ForumComponent } from './components/forum/forum.component';
 import { MenuComponent } from './components/menu/menu.component';
@@ -49,8 +50,14 @@ const routes: Routes = [
       },
       {
         path: 'type-writer',
-        //canActivate: [AllowedGuardService],
+        canActivate: [AllowedGuardService],
         component: TypeWriterComponent,
+        data: { animation: 'default' },
+      },
+      {
+        path: 'dotknot',
+        canActivate: [AllowedGuardService],
+        component: DotknotComponent,
         data: { animation: 'default' },
       },
     ],
